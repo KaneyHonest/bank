@@ -20,13 +20,12 @@ public class WithdrawLogic {
 			ps.executeUpdate();
 
 			ps = con.prepareStatement(
-					"insert into log (id, operationTime, operation, beforeBalance, amount, afterBalance) values ((select id from user where accountNumber = ?), ?, ?, ?, ?, ?)");
+					"insert into log (id, operationTime, operation, amount, afterBalance) values ((select id from user where accountNumber = ?), ?, ?, ?, ?)");
 			ps.setString(1, account.getAccountNumber());
 			ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
 			ps.setString(3, "出金");
-			ps.setInt(4, account.getBalance());
-			ps.setInt(5, amount);
-			ps.setInt(6, account.getBalance() - amount);
+			ps.setString(4, "-" + amount);
+			ps.setInt(5, account.getBalance() - amount);
 			ps.executeUpdate();
 
 		} catch (SQLException e) {

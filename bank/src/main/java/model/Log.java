@@ -5,9 +5,9 @@ import java.io.Serializable;
 public class Log implements Serializable {
 	private String operationTime;
 	private String operation;
-	private int beforeBalance;
-	private int amount;
-	private int afterBalance;
+	private String addressee;
+	private String amount;
+	private int Balance;
 	
 	public Log() {}
 
@@ -27,28 +27,28 @@ public class Log implements Serializable {
 		this.operation = operation;
 	}
 
-	public int getBeforeBalance() {
-		return beforeBalance;
+	public String getAddressee() {
+		return addressee;
 	}
 
-	public void setBeforeBalance(int beforeBalance) {
-		this.beforeBalance = beforeBalance;
+	public void setAddressee(String addressee) {
+		this.addressee = addressee;
 	}
 
-	public int getAmount() {
+	public String getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 
-	public int getAfterBalance() {
-		return afterBalance;
+	public int getBalance() {
+		return Balance;
 	}
 
-	public void setAfterBalance(int afterBalance) {
-		this.afterBalance = afterBalance;
+	public void setBalance(int Balance) {
+		this.Balance = Balance;
 	}
 	
 	
