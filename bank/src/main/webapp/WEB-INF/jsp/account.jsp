@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><%@page
-	import="model.Account, model.Log, java.util.List"%>
+	import="model.Account, model.Log, java.util.List, java.util.Date, java.text.SimpleDateFormat"%>
 <%
 Account account = (Account) session.getAttribute("account");
 %>
 <%
 @SuppressWarnings("unchecked")
 List<Log> logs = (List<Log>) request.getAttribute("logs");
+%>
+<%
+String date = new SimpleDateFormat("yyyy-MM").format(new Date());
 %>
 
 <!DOCTYPE html>
@@ -25,6 +28,8 @@ List<Log> logs = (List<Log>) request.getAttribute("logs");
 		残高は<%=account.getBalance()%></p>
 
 	<!-- 記録出力 -->
+	<a href="/bank/ReferLog?date=<%=date %>">記録の参照</a>
+	<p>直近の記録</p>
 	<table>
 		<tr>
 			<th>年月日(新しい順)</th>

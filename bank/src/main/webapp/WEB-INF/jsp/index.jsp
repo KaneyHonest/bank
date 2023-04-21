@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>データベース銀行</title>
+<title>データベースバンク</title>
 </head>
 <body>
-	<h1>データベース銀行</h1>
+	<h1>データベースバンク</h1>
 	<p>
 		<a href="/bank/Register">新規口座開設</a>
 	</p>
