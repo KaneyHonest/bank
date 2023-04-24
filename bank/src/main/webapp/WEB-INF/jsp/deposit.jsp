@@ -9,7 +9,7 @@
 <body>
 <h1>入金画面</h1>
 <form action="/bank/Deposit" method="post">
-金額：<input type="number" name="amount">
+金額：<input type="number" name="amount" min="1" max="100" step="1">
 <input type="submit" value="入金">
 </form>
 <a href="/bank/Main">戻る</a>

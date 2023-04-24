@@ -8,11 +8,28 @@
 </head>
 <body>
 <h1>ログイン画面</h1>
-<form action="/bank/Login" method="post">
-口座番号：<input type="text" name="accountNumber"><br>
-パスワード：<input type="password" name="password">
-<input type="submit" value="登録">
+<form action="/bank/Login" method="post" id="form">
+口座番号：<input type="text" name="accountNumber" id="accountNumber" required placeholder="口座番号" title="口座番号10桁を入力"><br>
+パスワード：<input type="password" name="password" id="password" required placeholder="パスワード" title="半角英数字4-16文字を入力">
+<input type="submit" value="登録" id="submit">
 </form>
 <a href="/bank/Bank">戻る</a>
+
+<script type="text/javascript">
+
+const button = document.querySelector("#submit");
+const form = document.querySelector("#form");
+const accountNumber = document.querySelector("#accountNumber");
+const password = document.querySelector("#password");
+
+submit.disabled = true;
+
+form.addEventListener('input', () => {
+	submit.disabled = !form.checkValidity(); //invalidならdisabledをtrue
+});
+
+</script>
 </body>
+
+
 </html>
