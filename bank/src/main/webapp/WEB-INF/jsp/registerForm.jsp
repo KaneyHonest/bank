@@ -21,27 +21,28 @@
 	<script type="text/javascript">
 	const nameInput = document.querySelector("#name");
 	const passwordInput = document.querySelector("#password");
+
+	nameInput.setCustomValidity('名前を入力してください。');
+	passwordInput.setCustomValidity('パスワードを入力してください。');
 	
 	nameInput.addEventListener('input', () => {
-		nameInput.setCustomValidity('');
-		nameInput.checkValidity();
-	});
-
-	nameInput.addEventListener('invalid', () => {
-		nameInput.setCustomValidity('名前を入力してください。');
+		if (nameInput.validity.valueMissing) {
+			nameInput.setCustomValidity('名前を入力してください。');
+		} else if (nameInput.validity.tooLong) {
+			nameInput.setCustomValidity('名前は10文字以内で入力してください。');
+		} else {
+			nameInput.setCustomValidity('');
+		}
 	});
 
 	passwordInput.addEventListener('input', () => {
-	  passwordInput.setCustomValidity('');
-	  passwordInput.checkValidity();
-	});
-
-	passwordInput.addEventListener('invalid', () => {
-	  if (passwordInput.value === '') {
-	    passwordInput.setCustomValidity('パスワードを入力してください。');
-	  } else {
-	    passwordInput.setCustomValidity('パスワードは半角英数字4-16文字を入力してください。');
-	  }
+		if (passwordInput.validity.valueMissing) {
+			passwordInput.setCustomValidity('パスワードを入力してください。');
+		} else if (passwordInput.validity.patternMismatch) {
+			passwordInput.setCustomValidity('パスワードは半角英数字4-16文字を入力してください。');
+		} else {
+			passwordInput.setCustomValidity('');
+		}
 	});
 	</script>
 </body>
