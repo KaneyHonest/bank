@@ -18,7 +18,7 @@ System.out.println("jsp :" +dateSettings.getDate());
 <body>
 <p><%=dateSettings.getDate() %></p>
 <form action="/bank/ReferLog" method="get">
-<input type="month" name="date" value="<%=dateSettings.getDate() %>" min="<%=dateSettings.getMinDate() %>" max="<%=dateSettings.getMaxDate() %>">
+<input type="month" name="date" value="<%=dateSettings.getDate() %>" min="<%=dateSettings.getMinDate() %>" max="<%=dateSettings.getMaxDate() %>" autocomplete="off">
 <input type="submit" value="参照">
 </form>
 <p>記録一覧</p>
