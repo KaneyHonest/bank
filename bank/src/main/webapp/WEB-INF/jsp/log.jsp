@@ -68,7 +68,7 @@ window.addEventListener("pageshow", () => {
 
 	// getメソッド
 	console.log(params.get('date')); // 5
-	dateControl.value = params.get('date');
+	//dateControl.value = params.get('date');
 	
 });
 

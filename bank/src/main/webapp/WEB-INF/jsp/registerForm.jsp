@@ -11,9 +11,9 @@
 	<form action="/bank/Register" method="post">
 		<label for="name">名前:</label> <input type="text" id="name" name="name" required
 			size="20" placeholder="ユーザー名" maxlength="10" title="名前を入力してください"><br>
-		<label for="password">パスワード(半角英数字4-16文字):</label> <input id="password" name="password"
+		<label for="password">パスワード(半角英数字4-16文字):</label> <input id="password" name="password" autocomplete="new-password"
 			type="password" size="20" required placeholder="パスワード"
-			pattern="^[0-9a-zA-Z]{4,16}$" title="半角英数字4-16文字のパスワードを入力してください">
+			pattern="^[0-9a-zA-Z]{4,16}$" title="半角英数字4-16文字のパスワードを入力してください" >
 		<input type="submit" value="登録">
 	</form>
 	<a href="/bank/Bank">戻る</a>
@@ -26,24 +26,33 @@
 	passwordInput.setCustomValidity('パスワードを入力してください。');
 	
 	nameInput.addEventListener('input', () => {
+		nameInput.setCustomValidity('');
+		nameInput.reportValidity();
+		
+	});
+	
+	nameInput.addEventListener('invalid', () => {
 		if (nameInput.validity.valueMissing) {
 			nameInput.setCustomValidity('名前を入力してください。');
 		} else if (nameInput.validity.tooLong) {
 			nameInput.setCustomValidity('名前は10文字以内で入力してください。');
-		} else {
-			nameInput.setCustomValidity('');
 		}
 	});
 
 	passwordInput.addEventListener('input', () => {
+		passwordInput.setCustomValidity('');
+		passwordInput.reportValidity();
+		
+		
+	});
+	
+	passwordInput.addEventListener('invalid', () => {
 		if (passwordInput.validity.valueMissing) {
 			passwordInput.setCustomValidity('パスワードを入力してください。');
 		} else if (passwordInput.validity.patternMismatch) {
 			passwordInput.setCustomValidity('パスワードは半角英数字4-16文字を入力してください。');
-		} else {
-			passwordInput.setCustomValidity('');
-		}
-	});
+		} 
+	})
 	</script>
 </body>
 </html>
