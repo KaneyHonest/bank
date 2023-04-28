@@ -56,8 +56,6 @@ public class ReferLog extends HttpServlet {
 		String date = request.getParameter("date");
 		dateSettings.setDate(date);
 		
-		System.out.println("servlet :"+date);
-		
 		request.setAttribute("dateSettings", dateSettings);
 		
 		//ログをスコープへ

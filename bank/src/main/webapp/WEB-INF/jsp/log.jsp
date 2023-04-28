@@ -7,7 +7,6 @@
 <%
 @SuppressWarnings("unchecked")
 List<Log> logs = (List<Log>) request.getAttribute("logs");
-System.out.println("jsp :" +dateSettings.getDate());
 %>
 <!DOCTYPE html>
 <html>
@@ -16,7 +15,6 @@ System.out.println("jsp :" +dateSettings.getDate());
 <title>記録の参照</title>
 </head>
 <body>
-<p><%=dateSettings.getDate() %></p>
 <form action="/bank/ReferLog" method="get">
 <input type="month" name="date" value="<%=dateSettings.getDate() %>" min="<%=dateSettings.getMinDate() %>" max="<%=dateSettings.getMaxDate() %>" autocomplete="off">
 <input type="submit" value="参照">

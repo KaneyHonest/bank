@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import logic.CanLoginLogic;
 import model.Account;
+import model.ErrorMessage;
 import model.User;
 
 /**
@@ -71,8 +72,10 @@ public class Login extends HttpServlet {
 			
 			
 			//エラー
+			ErrorMessage errorMessage = new ErrorMessage();
+			errorMessage.setMessage("ログインに失敗しました。");
 			
-			
+			request.setAttribute("errorMessage", errorMessage);
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/loginForm.jsp");
 			dispatcher.forward(request, response);

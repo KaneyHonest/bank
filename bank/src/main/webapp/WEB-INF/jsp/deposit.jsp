@@ -37,7 +37,6 @@ input.addEventListener('input', () => {
 		  input.setCustomValidity('');
 	  }
 });
-
 </script>
 </body>
 </html>
