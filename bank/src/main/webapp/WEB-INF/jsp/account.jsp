@@ -20,15 +20,30 @@ String date = new SimpleDateFormat("yyyy-MM").format(new Date());
 </head>
 <body>
 	<h1>口座画面</h1>
+	<% if (account.getBalance() == 1000000000) { %>
+	<p>入金</p>
+	<%} else { %>
 	<a href="/bank/Deposit">入金</a>
+	<% } %>
+	<%
+	if (account.getBalance() == 0) {
+	%>
+	<p>出金</p>
+	<p>振込</p>
+	<%
+	} else {
+	%>
 	<a href="/bank/Withdraw">出金</a>
 	<a href="/bank/Transfer">振込</a>
+	<%
+	}
+	%>
 	<a href="/bank/Logout">ログアウト</a>
 	<p>
 		残高は<%=account.getBalance()%></p>
 
 	<!-- 記録出力 -->
-	<a href="/bank/ReferLog?date=<%=date %>">記録の参照</a>
+	<a href="/bank/ReferLog?date=<%=date%>">記録の参照</a>
 	<p>直近の記録</p>
 	<table>
 		<tr>
@@ -40,25 +55,15 @@ String date = new SimpleDateFormat("yyyy-MM").format(new Date());
 		</tr>
 		<tr>
 			<%
-			for (Log log: logs) {
+			for (Log log : logs) {
 			%>
-			<th>
-			<%=log.getOperationTime()%>
-			</th>
-			<th>
-			<%=log.getOperation()%>
-			</th>
-			<th>
-			<%=log.getAddressee()%>
-			</th>
-			<th>
-			<%=log.getAmount()%>
-			</th>
-			<th>
-			<%=log.getBalance()%>
-			</th>
-			</tr>
-			<tr>
+			<th><%=log.getOperationTime()%></th>
+			<th><%=log.getOperation()%></th>
+			<th><%=log.getAddressee()%></th>
+			<th><%=log.getAmount()%></th>
+			<th><%=log.getBalance()%></th>
+		</tr>
+		<tr>
 			<%
 			}
 			%>
