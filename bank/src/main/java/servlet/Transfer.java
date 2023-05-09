@@ -10,9 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import logic.CheckDeposit;
+import logic.CheckWithdraw;
+import logic.ExistsAccountNumberLogic;
 import logic.SearchBalanceLogic;
 import logic.TransferLogic;
 import model.Account;
+import model.ErrorMessage;
 
 /**
  * Servlet implementation class Transfer
@@ -34,6 +38,13 @@ public class Transfer extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("account");
+		
+		if (account == null) {
+			response.sendRedirect("/bank/Bank");
+		}
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/transfer.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -55,6 +66,17 @@ public class Transfer extends HttpServlet {
 		
 		//振込額のチェック
 		
+		boolean isPassed = new CheckWithdraw().execute(account, amount) && new ExistsAccountNumberLogic().execute(transferAccountNumber) && new CheckDeposit().execute(transferAccountNumber, amount);
+		
+		if (!isPassed) {
+			ErrorMessage errorMessage = new ErrorMessage();
+			errorMessage.setMessage("振込エラーです。");
+			
+			request.setAttribute("errorMessage", errorMessage);
+			
+			doGet(request, response);
+			return;
+		}
 		
 		new TransferLogic().execute(account, transferAccountNumber, amount);
 		

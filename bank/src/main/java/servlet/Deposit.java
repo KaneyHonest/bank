@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import logic.CheckDeposit;
 import logic.DepositLogic;
 import logic.SearchBalanceLogic;
 import model.Account;
+import model.ErrorMessage;
 
 /**
  * Servlet implementation class Deposit
@@ -34,6 +36,13 @@ public class Deposit extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("account");
+		
+		if (account == null) {
+			response.sendRedirect("/bank/Bank");
+		}
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/deposit.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -47,14 +56,23 @@ public class Deposit extends HttpServlet {
 		HttpSession session = request.getSession();
 		Account account = (Account)session.getAttribute("account");
 		
-		new SearchBalanceLogic().execute(account);
-		
 		request.setCharacterEncoding("UTF-8");
 		int amount = Integer.parseInt(request.getParameter("amount"));
 		
+		new SearchBalanceLogic().execute(account);
+		
 		//振込額のチェック
+		boolean isPassed = new CheckDeposit().execute(account, amount);
 		
-		
+		if (!isPassed) {
+			ErrorMessage errorMessage = new ErrorMessage();
+			errorMessage.setMessage("入金エラーです。残高が増加したため、入金すると口座の上限金額を超えてしまいます。");
+			
+			request.setAttribute("errorMessage", errorMessage);
+			
+			doGet(request, response);
+			return;
+		}
 		
 		new DepositLogic().execute(account, amount);
 		

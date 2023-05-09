@@ -16,7 +16,7 @@ List<Log> logs = (List<Log>) request.getAttribute("logs");
 </head>
 <body>
 <form action="/bank/ReferLog" method="get">
-<input type="month" name="date" value="<%=dateSettings.getDate() %>" min="<%=dateSettings.getMinDate() %>" max="<%=dateSettings.getMaxDate() %>" autocomplete="off">
+<input type="month" name="date" value="<%=dateSettings.getDate() %>" min="<%=dateSettings.getMinDate() %>" max="<%=dateSettings.getMaxDate() %>" autocomplete="off" required>
 <input type="submit" value="参照">
 </form>
 <p>記録一覧</p>
@@ -55,22 +55,15 @@ List<Log> logs = (List<Log>) request.getAttribute("logs");
 		</tr>
 	</table>
 <script type="text/javascript">
-const dateControl = document.querySelector('input[type="month"]');
+const input = document.querySelector("input");
 
-window.addEventListener("pageshow", () => {
-	console.log(dateControl.value);
-	let url = new URL(window.location.href);
-
-	// URLSearchParamsオブジェクトを取得
-	let params = url.searchParams;
-
-	// getメソッド
-	console.log(params.get('date')); // 5
-	//dateControl.value = params.get('date');
-	
+input.addEventListener('change', () => {
+	if (input.validity.valueMissing) {
+		input.setCustomValidity('金額を入力してください。');
+	} else {
+		input.setCustomValidity('');
+	}
 });
-
-
 </script>
 </body>
 </html>

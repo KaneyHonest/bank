@@ -8,10 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import logic.CreateAccountNumberLogic;
 import logic.ExistsAccountNumberLogic;
 import logic.RegisterUserLogic;
+import model.Account;
 import model.User;
 
 /**
@@ -34,6 +36,13 @@ public class Register extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		Account account = (Account) session.getAttribute("account");
+		
+		if (account != null) {
+			response.sendRedirect("/bank/Main");
+		}
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/registerForm.jsp");
 		dispatcher.forward(request, response);
 	}

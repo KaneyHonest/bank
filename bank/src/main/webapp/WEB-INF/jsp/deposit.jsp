@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%><%@page import="model.Account"%>
+    pageEncoding="UTF-8"%><%@page import="model.Account, model.ErrorMessage"%>
+    <%response.setHeader("Cache-Control","no-store"); %>
 <%
 Account account = (Account) session.getAttribute("account");
+%>
+<%
+ErrorMessage errorMessage = (ErrorMessage) request.getAttribute("errorMessage");
 %>
 <!DOCTYPE html>
 <html>
@@ -19,11 +23,20 @@ Account account = (Account) session.getAttribute("account");
 </datalist>
 <input type="submit" value="入金">
 </form>
+
+<%
+	if (errorMessage != null) {
+	%>
+	<p>
+		<%=errorMessage.getMessage()%></p>
+	<%
+	}
+	%>
 <a href="/bank/Main">戻る</a>
 
 <script type="text/javascript">
 const input = document.querySelector("input");
-let max = input.max;
+const max = input.max;
 const regexp = /^0+/;
 input.setCustomValidity('金額を入力してください。');
 
@@ -46,6 +59,12 @@ input.addEventListener('input', () => {
 		  input.setCustomValidity('');
 	  }
 });
+
+window.addEventListener("pageshow", () => {
+	const form = document.querySelector("form");
+	form.reset();
+});
+
 </script>
 </body>
 </html>

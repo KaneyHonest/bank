@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%><%@page import="model.Account"%>
+    pageEncoding="UTF-8"%><%@page import="model.Account, model.ErrorMessage"%>
+    <%response.setHeader("Cache-Control","no-store"); %>
 <%
 Account account = (Account) session.getAttribute("account");
+%>
+<%
+ErrorMessage errorMessage = (ErrorMessage) request.getAttribute("errorMessage");
 %>
 <!DOCTYPE html>
 <html>
@@ -14,18 +18,28 @@ Account account = (Account) session.getAttribute("account");
 <p>残高<%= account.getBalance() %></p>
 <form action="/bank/Transfer" method="post">
 口座番号：<input type="text" name="accountNumber" pattern="^1\d{9}$" placeholder="金額" title="口座番号を入力" required ><br>
-金額：<input type="number" name="amount" min="1" max="<%= account.getBalance() %>" placeholder="金額" title="金額を入力" required list="defaultNumbers">
+金額：<input type="number" name="amount" min="1" max="<%= account.getBalance() > 10000000 ? 10000000 : 10000000 - account.getBalance() %>" placeholder="金額" title="金額を入力" required list="defaultNumbers">
 <datalist id="defaultNumbers">
   <option value="1000"></option>
   <option value="10000"></option>
 </datalist>
 <input type="submit" value="振込">
 </form>
+
+<%
+	if (errorMessage != null) {
+	%>
+	<p>
+		<%=errorMessage.getMessage()%></p>
+	<%
+	}
+	%>
 <a href="/bank/Main">戻る</a>
 
 <script type="text/javascript">
 const accountNumberInput = document.querySelector("input[type='text']");
 const amountInput = document.querySelector("input[type='number']");
+const max = amountInput.max;
 const regexp = /^0+/;
 
 accountNumberInput.setCustomValidity('口座番号を入力してください。');
@@ -46,7 +60,13 @@ accountNumberInput.addEventListener('invalid', () => {
 
 amountInput.addEventListener('input', () => {
 	  if (amountInput.validity.rangeOverflow || amountInput.validity.rangeUnderflow) {
-		  amountInput.setCustomValidity('金額は1-1千万円の範囲で入力してください。');
+		  if (max == 1) {
+			  input.setCustomValidity("金額は1円を入力してください。");
+		  } else if (max < 10000){
+			  input.setCustomValidity("金額は1-" + max + "円の範囲で入力してください。");
+		  } else {
+			  input.setCustomValidity("金額は1-" + (max / 10000) + "万円の範囲で入力してください。");
+		  }
 	  } else if (amountInput.validity.stepMismatch) {
 		  amountInput.setCustomValidity('整数値を入力してください。');
 	  } else if (amountInput.validity.valueMissing) {
@@ -56,6 +76,11 @@ amountInput.addEventListener('input', () => {
 	  } else {
 		  amountInput.setCustomValidity('');
 	  }
+});
+
+window.addEventListener("pageshow", () => {
+	const form = document.querySelector("form");
+	form.reset();
 });
 </script>
 </body>

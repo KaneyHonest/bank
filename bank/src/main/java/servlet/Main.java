@@ -39,6 +39,10 @@ public class Main extends HttpServlet {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("account");
 		
+		if (account == null) {
+			response.sendRedirect("/bank/Bank");
+		}
+		
 		new SearchBalanceLogic().execute(account);
 		List<Log> logs = new LogDAO().execute(account);
 		request.setAttribute("logs", logs);

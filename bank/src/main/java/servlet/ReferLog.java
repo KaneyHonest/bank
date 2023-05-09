@@ -42,6 +42,10 @@ public class ReferLog extends HttpServlet {
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("account");
 		
+		if (account == null) {
+			response.sendRedirect("/bank/Bank");
+		}
+		
 		DateSettings dateSettings = (DateSettings) request.getAttribute("dateSettings");
 		if (dateSettings == null) {
 			//最小値セット

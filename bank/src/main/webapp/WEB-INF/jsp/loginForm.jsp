@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="model.ErrorMessage"%>
+	<%response.setHeader("Cache-Control","no-store"); %>
 <%
 ErrorMessage errorMessage = (ErrorMessage) request.getAttribute("errorMessage");
 %>
@@ -14,7 +15,7 @@ ErrorMessage errorMessage = (ErrorMessage) request.getAttribute("errorMessage");
 	<form action="/bank/Login" method="post">
 		口座番号：<input type="text" name="accountNumber" id="accountNumber"
 			required placeholder="口座番号" title="口座番号10桁を入力"><br>
-		パスワード：<input type="password" name="password" id="password" required
+		パスワード：<input type="password" name="password" id="password" required autocomplete="new-password"
 			placeholder="パスワード" title="半角英数字4-16文字を入力"> <input
 			type="submit" value="登録" id="button">
 	</form>
@@ -42,6 +43,10 @@ form.addEventListener('input', () => {
 	button.disabled = !form.checkValidity();
 });
 
+window.addEventListener("pageshow", () => {
+	const form = document.querySelector("form");
+	form.reset();
+});
 </script>
 </body>
 
