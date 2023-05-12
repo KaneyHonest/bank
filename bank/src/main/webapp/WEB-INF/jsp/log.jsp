@@ -13,6 +13,7 @@ List<Log> logs = (List<Log>) request.getAttribute("logs");
 <head>
 <meta charset="UTF-8">
 <title>記録の参照</title>
+<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
 </head>
 <body>
 <form action="/bank/ReferLog" method="get">

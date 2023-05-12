@@ -12,6 +12,7 @@ ErrorMessage errorMessage = (ErrorMessage) request.getAttribute("errorMessage");
 <head>
 <meta charset="UTF-8">
 <title>振込画面</title>
+<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
 </head>
 <body>
 <h1>振込画面</h1>

@@ -18,6 +18,7 @@ String date = new SimpleDateFormat("yyyy-MM").format(new Date());
 <head>
 <meta charset="UTF-8">
 <title>口座画面</title>
+<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
 </head>
 <body>
 	<h1>口座画面</h1>

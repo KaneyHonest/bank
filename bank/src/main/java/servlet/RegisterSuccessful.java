@@ -10,23 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import logic.CreateAccountNumberLogic;
-import logic.ExistsAccountNumberLogic;
-import logic.RegisterUserLogic;
 import model.Account;
 import model.User;
 
 /**
- * Servlet implementation class Register
+ * Servlet implementation class RegisterSuccessful
  */
-@WebServlet("/Register")
-public class Register extends HttpServlet {
+@WebServlet("/RegisterSuccessful")
+public class RegisterSuccessful extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Register() {
+    public RegisterSuccessful() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,7 +40,12 @@ public class Register extends HttpServlet {
 			response.sendRedirect("/bank/Main");
 		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/registerForm.jsp");
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			response.sendRedirect("/bank/Bank");
+		}
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/registerSuccessful.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -52,31 +54,6 @@ public class Register extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");
-		String name = request.getParameter("name");
-		String password = request.getParameter("password");
-		
-		
-		//名前とパスワードのチェック
-		
-		
-		String accountNumber = "";
-		
-		do {
-			accountNumber = new CreateAccountNumberLogic().execute();
-		} while (new ExistsAccountNumberLogic().execute(accountNumber));
-		
-		User user = new User();
-		user.setName(name);
-		user.setPassword(password);
-		user.setAccountNumber(accountNumber);
-		
-		new RegisterUserLogic().execute(user);
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("user", user);
-		
-		response.sendRedirect("/bank/RegisterSuccessful");
 	}
 
 }
