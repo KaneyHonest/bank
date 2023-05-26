@@ -57,6 +57,7 @@ input[type="submit"] {
     color: black;
     border: 1px solid gray;
      height: 25px;
+     cursor: pointer;  
 }
 a {
 	position: relative;
