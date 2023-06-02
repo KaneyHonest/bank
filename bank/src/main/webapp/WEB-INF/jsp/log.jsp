@@ -3,14 +3,10 @@
 	pageEncoding="UTF-8"
 	import="model.DateSetting,model.Log,java.util.List"%>
 <%
-
-
-response.setHeader("Cache-Control", "no-store")
+response.setHeader("Cache-Control", "no-store");
 %>
 <%
-
-
-DateSetting dateSetting = (DateSetting) session.getAttribute("dateSetting")
+DateSetting dateSetting = (DateSetting) session.getAttribute("dateSetting");
 %>
 <%
 @SuppressWarnings("unchecked")

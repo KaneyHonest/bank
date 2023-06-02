@@ -44,10 +44,10 @@ public class ReferLog extends HttpServlet {
 		if (dateSetting == null) {
 			// なければ（初回） 
 			dateSetting = new DateSetting();
-			dateSetting.setMinDate(new GetRegisterDateLogic().execute(account));
+			dateSetting.setMinDate(new GetRegisterDateLogic().execute(account)); // 口座登録日を最小年月
 		}
 
-		dateSetting.setMaxDate(new SimpleDateFormat("yyyy-MM").format(new Date()));
+		dateSetting.setMaxDate(new SimpleDateFormat("yyyy-MM").format(new Date())); // 現在を最大年月
 
 		request.setCharacterEncoding("UTF-8");
 		String date = request.getParameter("date");

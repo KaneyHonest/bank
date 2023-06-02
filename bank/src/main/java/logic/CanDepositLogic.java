@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import database.DBManager;
 import model.Account;
 
-public class CheckDeposit {
+public class CanDepositLogic {
 	public boolean execute(Account account, int amount) {
 		return account.getBalance() + amount <= 1000000000;
 	}
@@ -19,7 +19,7 @@ public class CheckDeposit {
 		PreparedStatement ps = null;
 		try {
 			con = DBManager.getConnection();
-			ps = con.prepareStatement("select balance (select accountNumber from user where accountNumber = ?);");
+			ps = con.prepareStatement("select balance from user where accountNumber = ?;");
 			ps.setString(1, accountNumber);
 			rs = ps.executeQuery();
 			rs.next();
