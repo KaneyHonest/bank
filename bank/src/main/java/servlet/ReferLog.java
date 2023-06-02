@@ -43,7 +43,9 @@ public class ReferLog extends HttpServlet {
 		Account account = (Account) session.getAttribute("account");
 		
 		if (account == null) {
+			System.out.println(account);
 			response.sendRedirect("/bank/Bank");
+			return;
 		}
 		
 		DateSettings dateSettings = (DateSettings) request.getAttribute("dateSettings");
