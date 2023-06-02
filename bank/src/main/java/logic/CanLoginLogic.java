@@ -11,8 +11,6 @@ import model.User;
 public class CanLoginLogic {
 
 	public boolean execute(User user) {
-		// TODO 自動生成されたメソッド・スタブ
-
 		Connection con = null;
 		ResultSet rs = null;
 		PreparedStatement ps = null;
@@ -24,11 +22,13 @@ public class CanLoginLogic {
 			ps.setString(2, user.getPassword());
 			rs = ps.executeQuery();
 			rs.next();
-			return rs.getInt(1) == 1 ? true : false;
+
+			final int EXISTENCE = 1;
+			return rs.getInt(1) == EXISTENCE; // 口座番号があればログイン成功
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return false;
 	}
-
 }

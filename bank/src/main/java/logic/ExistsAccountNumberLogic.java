@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import database.DBManager;
 
 public class ExistsAccountNumberLogic {
+	
 	public boolean execute(String accountNumber) {
+		
 		Connection con = null;
 		ResultSet rs = null;
 		PreparedStatement ps = null;
@@ -18,11 +20,13 @@ public class ExistsAccountNumberLogic {
 			ps.setString(1, accountNumber);
 			rs = ps.executeQuery();
 			rs.next();
-			return rs.getInt(1) == 1 ? true : false;
+
+			final int EXISTENCE = 1;
+			return rs.getInt(1) == EXISTENCE;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
+
 		return true;
-		
 	}
 }

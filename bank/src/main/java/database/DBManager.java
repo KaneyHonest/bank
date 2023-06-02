@@ -9,8 +9,9 @@ public class DBManager {
 	private static String url = "jdbc:mariadb://localhost:3306/bank";
 	private static String user = "root";
 	private static String pass = "1234";
-	
+
 	public static Connection getConnection() {
+
 		Connection connection = null;
 		try {
 			Class.forName(driverName);
@@ -18,7 +19,7 @@ public class DBManager {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return connection;
 	}
 }

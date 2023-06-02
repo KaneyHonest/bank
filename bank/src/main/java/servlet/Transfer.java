@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import logic.CheckDeposit;
 import logic.CheckWithdraw;
 import logic.ExistsAccountNumberLogic;
-import logic.SearchBalanceLogic;
+import logic.SetBalanceLogic;
 import logic.TransferLogic;
 import model.Account;
 import model.ErrorMessage;
@@ -58,7 +58,7 @@ public class Transfer extends HttpServlet {
 		HttpSession session = request.getSession();
 		Account account = (Account)session.getAttribute("account");
 		
-		new SearchBalanceLogic().execute(account);
+		new SetBalanceLogic().execute(account);
 		
 		request.setCharacterEncoding("UTF-8");
 		int amount = Integer.parseInt(request.getParameter("amount"));

@@ -10,8 +10,9 @@ import database.DBManager;
 import model.Account;
 
 public class GetRegisterDateLogic {
+	
 	public String execute(Account account) {
-		String registerDate = null;
+		
 		Connection con = null;
 		ResultSet rs = null;
 		PreparedStatement ps = null;
@@ -21,10 +22,12 @@ public class GetRegisterDateLogic {
 			ps.setString(1, account.getAccountNumber());
 			rs = ps.executeQuery();
 			rs.next();
-			registerDate = new SimpleDateFormat("yyyy-MM").format(rs.getTimestamp(1));
+			
+			return new SimpleDateFormat("yyyy-MM").format(rs.getTimestamp(1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
-		return registerDate;
+		
+		return null;
 	}
 }

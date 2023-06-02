@@ -10,50 +10,39 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import logic.IsLoginLogic;
 import model.Account;
 import model.User;
 
-/**
- * Servlet implementation class RegisterSuccessful
- */
 @WebServlet("/RegisterSuccessful")
 public class RegisterSuccessful extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RegisterSuccessful() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	public RegisterSuccessful() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("account");
-		
-		if (account != null) {
-			response.sendRedirect("/bank/Main");
-		}
-		
+
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
+			// ユーザー情報がなければ最初の画面へリダイレクト
 			response.sendRedirect("/bank/Bank");
+			return;
 		}
-		
+
+		Account account = (Account) session.getAttribute("account");
+		boolean isLogin = new IsLoginLogic().execute(account);
+		if (isLogin) {
+			// ログイン状態なら口座画面へリダイレクト
+			response.sendRedirect("/bank/Main");
+			return;
+		}
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/registerSuccessful.jsp");
 		dispatcher.forward(request, response);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
-
 }

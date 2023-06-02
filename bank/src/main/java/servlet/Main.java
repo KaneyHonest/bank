@@ -12,50 +12,39 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.LogDAO;
-import logic.SearchBalanceLogic;
+import logic.IsLoginLogic;
+import logic.SetBalanceLogic;
 import model.Account;
 import model.Log;
 
-/**
- * Servlet implementation class Account
- */
 @WebServlet("/Main")
 public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Main() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	public Main() {
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		HttpSession session = request.getSession();
 		Account account = (Account) session.getAttribute("account");
-		
-		if (account == null) {
+
+		boolean isLogin = new IsLoginLogic().execute(account);
+		if (!isLogin) {
+			// ログイン状態でないなら初期画面へリダイレクト
 			response.sendRedirect("/bank/Bank");
+			return;
 		}
-		
-		new SearchBalanceLogic().execute(account);
+
+		// 残高をセット
+		new SetBalanceLogic().execute(account);
+
+		// 直近５つ分の口座の記録を参照
 		List<Log> logs = new LogDAO().execute(account);
 		request.setAttribute("logs", logs);
-		
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/account.jsp");
 		dispatcher.forward(request, response);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
-
 }

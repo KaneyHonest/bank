@@ -10,73 +10,85 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import logic.CheckUserInformationLogic;
 import logic.CreateAccountNumberLogic;
 import logic.ExistsAccountNumberLogic;
+import logic.IsLoginLogic;
 import logic.RegisterUserLogic;
 import model.Account;
+import model.ErrorMessage;
 import model.User;
 
-/**
- * Servlet implementation class Register
- */
 @WebServlet("/Register")
 public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Register() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	public Register() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("account");
-		
-		if (account != null) {
-			response.sendRedirect("/bank/Main");
+
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			// doPostメソッドのUserのセッションがあれば口座番号の確認画面へリダイレクト
+			response.sendRedirect("/bank/RegisterSuccessful");
+			return;
 		}
-		
+
+		Account account = (Account) session.getAttribute("account");
+		boolean isLogin = new IsLoginLogic().execute(account);
+		if (isLogin) {
+			// ログイン状態なら口座画面へリダイレクト
+			response.sendRedirect("/bank/Main");
+			return;
+		}
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/registerForm.jsp");
 		dispatcher.forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
-		
-		
-		//名前とパスワードのチェック
-		
-		
+
+		// バリデーションチェック
+		boolean valid = new CheckUserInformationLogic().execute(name, password);
+		if (!valid) {
+			ErrorMessage errorMessage = new ErrorMessage();
+			errorMessage.setMessage("登録に失敗しました");
+
+			request.setAttribute("errorMessage", errorMessage);
+
+			doGet(request, response);
+			return;
+		}
+
+		// １から始まる１０桁の口座番号の生成
 		String accountNumber = "";
-		
 		do {
 			accountNumber = new CreateAccountNumberLogic().execute();
 		} while (new ExistsAccountNumberLogic().execute(accountNumber));
-		
+
+		// Beans
 		User user = new User();
 		user.setName(name);
 		user.setPassword(password);
 		user.setAccountNumber(accountNumber);
-		
+
+		// データベースにユーザー情報を登録
 		new RegisterUserLogic().execute(user);
-		
+
+		// 以下、二重送信防止のためPRGパターンを使用
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
-		
+
 		response.sendRedirect("/bank/RegisterSuccessful");
 	}
-
 }

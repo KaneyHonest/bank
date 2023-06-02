@@ -2,9 +2,12 @@ package model;
 
 import java.io.Serializable;
 
-public class DateSettings implements Serializable {
+public class DateSetting implements Serializable {
 	private String date, minDate, maxDate;
-	
+
+	public DateSetting() {
+	}
+
 	public String getDate() {
 		return date;
 	}
@@ -28,10 +31,4 @@ public class DateSettings implements Serializable {
 	public void setMaxDate(String maxDate) {
 		this.maxDate = maxDate;
 	}
-
-	public DateSettings() {
-		super();
-		// TODO 自動生成されたコンストラクター・スタブ
-	}
-
 }

@@ -95,14 +95,6 @@ a:active {
 <body>
 <div>
 	<h1>ログイン画面</h1>
-	<form action="/bank/Login" method="post">
-		<label for="accountNumber">口座番号</label> <input type="text" name="accountNumber" id="accountNumber"
-			required placeholder="口座番号" title="口座番号10桁を入力"><br>
-		<label for="password">パスワード</label> <input type="password" name="password" id="password" required autocomplete="new-password"
-			placeholder="パスワード" title="半角英数字4-16文字を入力"> <input
-			type="submit" value="登録" id="button">
-	</form>
-
 	<%
 	if (errorMessage != null) {
 	%>
@@ -111,9 +103,19 @@ a:active {
 	<%
 	}
 	%>
+	<form action="/bank/Login" method="post">
+		<label for="accountNumber">口座番号</label> <input type="text" name="accountNumber" id="accountNumber"
+			required placeholder="口座番号" title="口座番号10桁を入力"><br>
+		<label for="password">パスワード</label> <input type="password" name="password" id="password" required autocomplete="new-password"
+			placeholder="パスワード" title="半角英数字4-16文字を入力"> <input
+			type="submit" value="登録" id="button">
+	</form>
+
+	
 
 
 	<a href="/bank/Bank">戻る</a>
+	
 </div>
 	<script type="text/javascript">
 

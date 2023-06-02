@@ -8,8 +8,9 @@ public class Log implements Serializable {
 	private String addressee;
 	private String amount;
 	private int Balance;
-	
-	public Log() {}
+
+	public Log() {
+	}
 
 	public String getOperationTime() {
 		return operationTime;
@@ -50,6 +51,4 @@ public class Log implements Serializable {
 	public void setBalance(int Balance) {
 		this.Balance = Balance;
 	}
-	
-	
 }

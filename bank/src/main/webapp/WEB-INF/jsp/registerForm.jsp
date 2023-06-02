@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="model.ErrorMessage"%>
 	<%response.setHeader("Cache-Control","no-store"); %>
+	<%
+ErrorMessage errorMessage = (ErrorMessage) request.getAttribute("errorMessage");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -92,6 +95,14 @@ a:active {
 <body>
 <div>
 	<h1>登録フォーム</h1>
+	<%
+	if (errorMessage != null) {
+	%>
+	<p>
+		<%=errorMessage.getMessage()%></p>
+	<%
+	}
+	%>
 	<form action="/bank/Register" method="post">
 		<label for="name">名前</label> <input type="text" id="name" name="name" required
 			size="20" placeholder="ユーザー名" maxlength="10" title="名前を入力してください"><br>
@@ -101,6 +112,7 @@ a:active {
 		<input type="submit" value="登録">
 	</form>
 	<a href="/bank/Bank">戻る</a>
+	
 	</div>
 
 	<script type="text/javascript">

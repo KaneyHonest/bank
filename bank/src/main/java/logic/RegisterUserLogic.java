@@ -8,7 +8,9 @@ import database.DBManager;
 import model.User;
 
 public class RegisterUserLogic {
+	
 	public void execute(User user) {
+		
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -17,9 +19,10 @@ public class RegisterUserLogic {
 			ps.setString(1, user.getName());
 			ps.setString(2, user.getPassword());
 			ps.setString(3, user.getAccountNumber());
+			
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 }

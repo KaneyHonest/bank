@@ -1,12 +1,16 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="model.DateSettings, model.Log, java.util.List"%>
+	import="model.DateSetting,model.Log,java.util.List"%>
 <%
-response.setHeader("Cache-Control", "no-store");
+
+
+response.setHeader("Cache-Control", "no-store")
 %>
 <%
-DateSettings dateSettings = (DateSettings) request.getAttribute("dateSettings");
+
+
+DateSetting dateSetting = (DateSetting) session.getAttribute("dateSetting")
 %>
 <%
 @SuppressWarnings("unchecked")
@@ -23,9 +27,11 @@ div {
 	width: 150px;
 	margin: 0 auto;
 }
+
 .font_green {
 	color: green;
 }
+
 h1 {
 	text-align: center;
 	margin: 15px 0;
@@ -76,9 +82,9 @@ select {
 	<h1>口座履歴</h1>
 	<div>
 		<form action="/bank/ReferLog" method="get">
-			<input type="month" name="date" value="<%=dateSettings.getDate()%>"
-				min="<%=dateSettings.getMinDate()%>"
-				max="<%=dateSettings.getMaxDate()%>" autocomplete="off" required>
+			<input type="month" name="date" value="<%=dateSetting.getDate()%>"
+				min="<%=dateSetting.getMinDate()%>"
+				max="<%=dateSetting.getMaxDate()%>" autocomplete="off" required>
 		</form>
 		<a href="/bank/Main">戻る</a>
 	</div>
@@ -86,7 +92,7 @@ select {
 		<caption>履歴一覧</caption>
 		<thead>
 			<tr>
-			<%if (logs.size() != 0) { %>
+				<%if (logs.size() != 0) { %>
 				<th><select class="order">
 						<option value="ascending" selected>昇順</option>
 						<option value="descending">降順</option>
@@ -97,10 +103,10 @@ select {
 						<option value="出金">出金</option>
 						<option value="振込">振込</option>
 				</select></th>
-			<%} else { %>
+				<%} else { %>
 				<th>日付</th>
 				<th>操作</th>
-			<%} %>
+				<%} %>
 				<th>宛名</th>
 				<th>金額</th>
 				<th>残高</th>
@@ -116,11 +122,13 @@ select {
 				<td><%=log.getOperation()%></td>
 				<td><%=log.getAddressee()%></td>
 				<td
-					class=" <%=Integer.parseInt(log.getAmount()) > 0 ? "font_green" : "font_red"%> "> <%=log.getAmount()%> </td>
+					class=" <%=Integer.parseInt(log.getAmount()) > 0 ? "font_green" : "font_red"%> ">
+					<%=log.getAmount()%>
+				</td>
 				<td><%=log.getBalance()%></td>
 			</tr>
 			<%}%>
-			
+
 		</tbody>
 	</table>
 	<script type="text/javascript">

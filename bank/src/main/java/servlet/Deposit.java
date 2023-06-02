@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import logic.CheckDeposit;
 import logic.DepositLogic;
-import logic.SearchBalanceLogic;
+import logic.SetBalanceLogic;
 import model.Account;
 import model.ErrorMessage;
 
@@ -59,7 +59,7 @@ public class Deposit extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		int amount = Integer.parseInt(request.getParameter("amount"));
 		
-		new SearchBalanceLogic().execute(account);
+		new SetBalanceLogic().execute(account);
 		
 		//振込額のチェック
 		boolean isPassed = new CheckDeposit().execute(account, amount);

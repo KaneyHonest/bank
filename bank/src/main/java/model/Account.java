@@ -5,8 +5,9 @@ import java.io.Serializable;
 public class Account implements Serializable {
 	private String accountNumber;
 	private int balance;
-	
-	public Account() {}
+
+	public Account() {
+	}
 
 	public String getAccountNumber() {
 		return accountNumber;

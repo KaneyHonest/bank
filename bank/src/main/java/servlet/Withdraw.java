@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import logic.CheckWithdraw;
-import logic.SearchBalanceLogic;
+import logic.SetBalanceLogic;
 import logic.WithdrawLogic;
 import model.Account;
 import model.ErrorMessage;
@@ -58,7 +58,7 @@ public class Withdraw extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		int amount = Integer.parseInt(request.getParameter("amount"));
 		
-		new SearchBalanceLogic().execute(account);
+		new SetBalanceLogic().execute(account);
 		
 		//振込額のチェック
 		boolean isPassed = new CheckWithdraw().execute(account, amount);
