@@ -5,9 +5,6 @@ import java.io.Serializable;
 public class DateSetting implements Serializable {
 	private String date, minDate, maxDate;
 
-	public DateSetting() {
-	}
-
 	public String getDate() {
 		return date;
 	}

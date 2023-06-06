@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import database.DBManager;
 
 public class ExistsAccountNumberLogic {
-	
+
 	public boolean execute(String accountNumber) {
-		
+
 		Connection con = null;
 		ResultSet rs = null;
 		PreparedStatement ps = null;

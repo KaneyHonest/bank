@@ -17,20 +17,18 @@ import logic.IsLoginLogic;
 import logic.SetBalanceLogic;
 import logic.TransferLogic;
 import model.Account;
+import model.AccountSetting;
 import model.ErrorMessage;
 
 @WebServlet("/Transfer")
 public class Transfer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public Transfer() {
-	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
-		
+
 		Account account = (Account) session.getAttribute("account");
 		boolean isLogin = new IsLoginLogic().execute(account);
 		if (!isLogin) {
@@ -47,23 +45,23 @@ public class Transfer extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("account");
 
+		Account account = (Account) session.getAttribute("account");
 		new SetBalanceLogic().execute(account);
 
 		request.setCharacterEncoding("UTF-8");
 		int amount = Integer.parseInt(request.getParameter("amount"));
 		String transferAccountNumber = request.getParameter("accountNumber");
 
-		//振込額のチェック
-
-		boolean isPassed = new CanWithdrawLogic().execute(account, amount)
+		// 振込額と振込先のチェック
+		boolean isPassed = AccountSetting.isNotExceedSingleTransactionLimit(amount)
+				&& new CanWithdrawLogic().execute(account, amount)
 				&& new ExistsAccountNumberLogic().execute(transferAccountNumber)
 				&& new CanDepositLogic().execute(transferAccountNumber, amount);
 
 		if (!isPassed) {
 			ErrorMessage errorMessage = new ErrorMessage();
-			errorMessage.setMessage("振込エラーです。");
+			errorMessage.setMessage("振込に失敗しました");
 
 			request.setAttribute("errorMessage", errorMessage);
 
@@ -71,9 +69,9 @@ public class Transfer extends HttpServlet {
 			return;
 		}
 
+		// 振込処理
 		new TransferLogic().execute(account, transferAccountNumber, amount);
 
 		response.sendRedirect("/bank/Main");
 	}
-
 }

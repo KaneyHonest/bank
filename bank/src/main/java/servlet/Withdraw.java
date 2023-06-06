@@ -15,20 +15,18 @@ import logic.IsLoginLogic;
 import logic.SetBalanceLogic;
 import logic.WithdrawLogic;
 import model.Account;
+import model.AccountSetting;
 import model.ErrorMessage;
 
 @WebServlet("/Withdraw")
 public class Withdraw extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public Withdraw() {
-	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
-		
+
 		Account account = (Account) session.getAttribute("account");
 		boolean isLogin = new IsLoginLogic().execute(account);
 		if (!isLogin) {
@@ -43,21 +41,22 @@ public class Withdraw extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		HttpSession session = request.getSession();
+
 		Account account = (Account) session.getAttribute("account");
+		new SetBalanceLogic().execute(account);
 
 		request.setCharacterEncoding("UTF-8");
 		int amount = Integer.parseInt(request.getParameter("amount"));
 
-		new SetBalanceLogic().execute(account);
-
-		//振込額のチェック
-		boolean isPassed = new CanWithdrawLogic().execute(account, amount);
+		// 出金額のチェック
+		boolean isPassed = AccountSetting.isNotExceedSingleTransactionLimit(amount)
+				&& new CanWithdrawLogic().execute(account, amount);
 
 		if (!isPassed) {
 			ErrorMessage errorMessage = new ErrorMessage();
-			errorMessage.setMessage("出金エラーです。残高が減少したため、出金すると残高がマイナスになります。");
+			errorMessage.setMessage("出金に失敗しました");
 
 			request.setAttribute("errorMessage", errorMessage);
 
@@ -65,9 +64,9 @@ public class Withdraw extends HttpServlet {
 			return;
 		}
 
+		// 出金処理
 		new WithdrawLogic().execute(account, amount);
 
 		response.sendRedirect("/bank/Main");
 	}
-
 }

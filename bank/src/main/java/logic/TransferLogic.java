@@ -9,9 +9,9 @@ import database.DBManager;
 import model.Account;
 
 public class TransferLogic {
-	
+
 	public void execute(Account account, String transferAccountNumber, int amount) {
-	
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -41,7 +41,7 @@ public class TransferLogic {
 			ps.setString(6, transferAccountNumber);
 			ps.setInt(7, amount);
 			ps.executeUpdate();
-			
+
 			// 口座残高に反映
 			ps = con.prepareStatement("update user set balance=balance-? where accountNumber = ?;");
 			ps.setInt(1, amount);

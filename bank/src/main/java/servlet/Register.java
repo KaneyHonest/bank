@@ -23,10 +23,6 @@ import model.User;
 public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public Register() {
-		super();
-	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -34,7 +30,7 @@ public class Register extends HttpServlet {
 
 		User user = (User) session.getAttribute("user");
 		if (user != null) {
-			// doPostメソッドのUserのセッションがあれば口座番号の確認画面へリダイレクト
+			// ユーザーのセッションがあれば登録フォームではなく、口座番号の確認画面へリダイレクト
 			response.sendRedirect("/bank/RegisterSuccessful");
 			return;
 		}

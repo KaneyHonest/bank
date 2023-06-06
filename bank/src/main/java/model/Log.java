@@ -9,9 +9,6 @@ public class Log implements Serializable {
 	private String amount;
 	private int Balance;
 
-	public Log() {
-	}
-
 	public String getOperationTime() {
 		return operationTime;
 	}

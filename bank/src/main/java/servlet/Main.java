@@ -21,15 +21,12 @@ import model.Log;
 public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public Main() {
-	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("account");
 
+		Account account = (Account) session.getAttribute("account");
 		boolean isLogin = new IsLoginLogic().execute(account);
 		if (!isLogin) {
 			// ログイン状態でないなら初期画面へリダイレクト
@@ -41,7 +38,7 @@ public class Main extends HttpServlet {
 		new SetBalanceLogic().execute(account);
 
 		// 直近５つ分の口座の記録を参照
-		List<Log> logs = new LogDAO().execute(account);
+		List<Log> logs = new LogDAO().execute(account, 5);
 		request.setAttribute("logs", logs);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/account.jsp");

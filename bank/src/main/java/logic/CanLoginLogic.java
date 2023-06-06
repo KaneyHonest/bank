@@ -24,7 +24,7 @@ public class CanLoginLogic {
 			rs.next();
 
 			final int EXISTENCE = 1;
-			return rs.getInt(1) == EXISTENCE; // 口座番号があればログイン成功
+			return rs.getInt(1) == EXISTENCE; // 口座番号とパスワードが合致する口座があればログイン成功
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

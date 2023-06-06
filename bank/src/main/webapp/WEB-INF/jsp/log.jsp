@@ -6,7 +6,7 @@
 response.setHeader("Cache-Control", "no-store");
 %>
 <%
-DateSetting dateSetting = (DateSetting) session.getAttribute("dateSetting");
+DateSetting dateSetting = (DateSetting) request.getAttribute("dateSetting");
 %>
 <%
 @SuppressWarnings("unchecked")

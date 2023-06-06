@@ -6,9 +6,6 @@ public class Account implements Serializable {
 	private String accountNumber;
 	private int balance;
 
-	public Account() {
-	}
-
 	public String getAccountNumber() {
 		return accountNumber;
 	}

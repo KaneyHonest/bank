@@ -15,20 +15,18 @@ import logic.DepositLogic;
 import logic.IsLoginLogic;
 import logic.SetBalanceLogic;
 import model.Account;
+import model.AccountSetting;
 import model.ErrorMessage;
 
 @WebServlet("/Deposit")
 public class Deposit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public Deposit() {
-	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
-		
+
 		Account account = (Account) session.getAttribute("account");
 		boolean isLogin = new IsLoginLogic().execute(account);
 		if (!isLogin) {
@@ -45,19 +43,20 @@ public class Deposit extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
+
 		Account account = (Account) session.getAttribute("account");
+		new SetBalanceLogic().execute(account);
 
 		request.setCharacterEncoding("UTF-8");
 		int amount = Integer.parseInt(request.getParameter("amount"));
 
-		new SetBalanceLogic().execute(account);
-
-		//振込額のチェック
-		boolean isPassed = new CanDepositLogic().execute(account, amount);
+		// 入金額のチェック
+		boolean isPassed = AccountSetting.isNotExceedSingleTransactionLimit(amount)
+				&& new CanDepositLogic().execute(account, amount);
 
 		if (!isPassed) {
 			ErrorMessage errorMessage = new ErrorMessage();
-			errorMessage.setMessage("入金エラーです。残高が増加したため、入金すると口座の上限金額を超えてしまいます。");
+			errorMessage.setMessage("入金に失敗しました");
 
 			request.setAttribute("errorMessage", errorMessage);
 
@@ -65,6 +64,7 @@ public class Deposit extends HttpServlet {
 			return;
 		}
 
+		// 入金処理
 		new DepositLogic().execute(account, amount);
 
 		response.sendRedirect("/bank/Main");

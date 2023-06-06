@@ -9,14 +9,14 @@ import database.DBManager;
 import model.Account;
 
 public class WithdrawLogic {
-	
+
 	public void execute(Account account, int amount) {
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = DBManager.getConnection();
-			
+
 			// 記録する
 			ps = con.prepareStatement(
 					"insert into log (id, operationTime, operation, amount, afterBalance) values ((select id from user where accountNumber = ?), ?, ?, ?, ?)");
@@ -26,7 +26,7 @@ public class WithdrawLogic {
 			ps.setString(4, "-" + amount);
 			ps.setInt(5, account.getBalance() - amount);
 			ps.executeUpdate();
-			
+
 			// 口座残高に反映
 			ps = con.prepareStatement("update user set balance=balance-? where accountNumber = ?;");
 			ps.setInt(1, amount);

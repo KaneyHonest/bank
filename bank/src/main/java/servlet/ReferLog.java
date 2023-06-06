@@ -24,15 +24,12 @@ import model.Log;
 public class ReferLog extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public ReferLog() {
-	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		Account account = (Account) session.getAttribute("account");
 
+		Account account = (Account) session.getAttribute("account");
 		boolean isLogin = new IsLoginLogic().execute(account);
 		if (!isLogin) {
 			// ログイン状態でないなら初期画面へリダイレクト
@@ -40,22 +37,17 @@ public class ReferLog extends HttpServlet {
 			return;
 		}
 
-		DateSetting dateSetting = (DateSetting) session.getAttribute("dateSetting");
-		if (dateSetting == null) {
-			// なければ（初回） 
-			dateSetting = new DateSetting();
-			dateSetting.setMinDate(new GetRegisterDateLogic().execute(account)); // 口座登録日を最小年月
-		}
-
-		dateSetting.setMaxDate(new SimpleDateFormat("yyyy-MM").format(new Date())); // 現在を最大年月
-
 		request.setCharacterEncoding("UTF-8");
 		String date = request.getParameter("date");
+
+		DateSetting dateSetting = new DateSetting();
 		dateSetting.setDate(date);
+		dateSetting.setMinDate(new GetRegisterDateLogic().execute(account)); // 口座登録日を最小年月
+		dateSetting.setMaxDate(new SimpleDateFormat("yyyy-MM").format(new Date())); // 現在を最大年月
 
-		session.setAttribute("dateSetting", dateSetting);
+		request.setAttribute("dateSetting", dateSetting);
 
-		// 年月に合う口座の記録を参照
+		// リクエストされた年月の記録を参照
 		List<Log> logs = new LogDAO().execute(account, date);
 		request.setAttribute("logs", logs);
 

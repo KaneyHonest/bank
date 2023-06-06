@@ -5,9 +5,6 @@ import java.io.Serializable;
 public class User implements Serializable {
 	private String name, password, accountNumber;
 
-	public User() {
-	}
-
 	public String getName() {
 		return name;
 	}

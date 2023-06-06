@@ -9,9 +9,9 @@ import database.DBManager;
 import model.Account;
 
 public class DepositLogic {
-	
+
 	public void execute(Account account, int amount) {
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -26,7 +26,7 @@ public class DepositLogic {
 			ps.setString(4, "+" + amount);
 			ps.setInt(5, account.getBalance() + amount);
 			ps.executeUpdate();
-			
+
 			// 口座残高に反映
 			ps = con.prepareStatement("update user set balance=balance+? where accountNumber = ?;");
 			ps.setInt(1, amount);

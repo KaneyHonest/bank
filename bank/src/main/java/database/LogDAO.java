@@ -13,7 +13,7 @@ import model.Log;
 
 public class LogDAO {
 
-	public List<Log> execute(Account account) {
+	public List<Log> execute(Account account, int logNumber) {
 
 		Connection con = null;
 		ResultSet rs = null;
@@ -21,8 +21,10 @@ public class LogDAO {
 		try {
 			con = DBManager.getConnection();
 			ps = con.prepareStatement(
-					"select log.operationTime, log.operation, log.addressee, log.amount, log.afterBalance from log join user using(id) where user.accountNumber = ? order by log.operationTime desc limit 5;");
+					"select log.operationTime, log.operation, log.addressee, log.amount, log.afterBalance from log join user using(id) where user.accountNumber = ? order by log.operationTime desc limit ?;");
 			ps.setString(1, account.getAccountNumber());
+			ps.setInt(2, logNumber);
+
 			rs = ps.executeQuery();
 
 			List<Log> logs = new ArrayList<>();
