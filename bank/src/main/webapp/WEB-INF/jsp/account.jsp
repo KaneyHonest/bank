@@ -20,7 +20,10 @@ String date = new SimpleDateFormat("yyyy-MM").format(new Date());
 <head>
 <meta charset="UTF-8">
 <title>口座画面</title>
+
 <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+
 <style type="text/css">
 
 table {
@@ -161,7 +164,7 @@ a {
 					%>
 					<td><%=log.getOperationTime()%></td>
 					<td><%=log.getOperation()%></td>
-					<td><%=log.getAddressee()%></td>
+					<td><%=log.getAddress()%></td>
 					<td><%=log.getAmount()%></td>
 					<td><%=log.getBalance()%></td>
 				</tr>
@@ -173,7 +176,7 @@ a {
 			</table>
 		</div>
 	</div>
-
+<script src="js/index.js"></script>
 
 </body>
 </html>

@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import database.SetBalanceLogic;
 import logic.CanDepositLogic;
 import logic.DepositLogic;
 import logic.IsLoginLogic;
-import logic.SetBalanceLogic;
 import model.Account;
 import model.AccountSetting;
 import model.ErrorMessage;

@@ -116,9 +116,9 @@ select {
 			<tr>
 				<td><%=log.getOperationTime()%></td>
 				<td><%=log.getOperation()%></td>
-				<td><%=log.getAddressee()%></td>
+				<td><%=log.getAddress()%></td>
 				<td
-					class=" <%=Integer.parseInt(log.getAmount()) > 0 ? "font_green" : "font_red"%> ">
+					class=" <%=log.getAmount() > 0 ? "font_green" : "font_red"%> ">
 					<%=log.getAmount()%>
 				</td>
 				<td><%=log.getBalance()%></td>

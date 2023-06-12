@@ -21,7 +21,7 @@ public class LogDAO {
 		try {
 			con = DBManager.getConnection();
 			ps = con.prepareStatement(
-					"select log.operationTime, log.operation, log.addressee, log.amount, log.afterBalance from log join user using(id) where user.accountNumber = ? order by log.operationTime desc limit ?;");
+					"select log.operationTime, log.operation, log.address, log.amount, log.afterBalance from log join user using(id) where user.accountNumber = ? order by log.operationTime desc limit ?;");
 			ps.setString(1, account.getAccountNumber());
 			ps.setInt(2, logNumber);
 
@@ -32,8 +32,8 @@ public class LogDAO {
 				Log log = new Log();
 				log.setOperationTime(new SimpleDateFormat("yyyy年M月d日").format(rs.getTimestamp(1)));
 				log.setOperation(rs.getString(2));
-				log.setAddressee(rs.getString(3));
-				log.setAmount(rs.getString(4));
+				log.setAddress(rs.getString(3));
+				log.setAmount(rs.getInt(4));
 				log.setBalance(rs.getInt(5));
 				logs.add(log);
 			}
@@ -54,7 +54,7 @@ public class LogDAO {
 		try {
 			con = DBManager.getConnection();
 			ps = con.prepareStatement(
-					"select log.operationTime, log.operation, log.addressee, log.amount, log.afterBalance from log join user using(id) where user.accountNumber = ? and log.operationTime like ? order by log.operationTime desc;");
+					"select log.operationTime, log.operation, log.address, log.amount, log.afterBalance from log join user using(id) where user.accountNumber = ? and log.operationTime like ? order by log.operationTime desc;");
 			ps.setString(1, account.getAccountNumber());
 			ps.setString(2, date + "%");
 			rs = ps.executeQuery();
@@ -64,8 +64,8 @@ public class LogDAO {
 				Log log = new Log();
 				log.setOperationTime(new SimpleDateFormat("yyyy年M月d日").format(rs.getTimestamp(1)));
 				log.setOperation(rs.getString(2));
-				log.setAddressee(rs.getString(3));
-				log.setAmount(rs.getString(4));
+				log.setAddress(rs.getString(3));
+				log.setAmount(rs.getInt(4));
 				log.setBalance(rs.getInt(5));
 				logs.add(log);
 			}

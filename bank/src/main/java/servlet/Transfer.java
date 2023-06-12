@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import database.ExistsAccountNumberLogic;
+import database.SetBalanceLogic;
 import logic.CanDepositLogic;
 import logic.CanWithdrawLogic;
-import logic.ExistsAccountNumberLogic;
 import logic.IsLoginLogic;
-import logic.SetBalanceLogic;
 import logic.TransferLogic;
 import model.Account;
 import model.AccountSetting;
@@ -51,13 +51,28 @@ public class Transfer extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		int amount = Integer.parseInt(request.getParameter("amount"));
+
 		String transferAccountNumber = request.getParameter("accountNumber");
+		boolean existsAccount = new ExistsAccountNumberLogic().execute(transferAccountNumber);
+		
+		if (!existsAccount) {
+			ErrorMessage errorMessage = new ErrorMessage();
+			errorMessage.setMessage("振込に失敗しました");
+
+			request.setAttribute("errorMessage", errorMessage);
+
+			doGet(request, response);
+			return;
+		}
+		
+		Account transferAccount = new Account();
+		transferAccount.setAccountNumber(transferAccountNumber);
+		new SetBalanceLogic().execute(transferAccount);
 
 		// 振込額と振込先のチェック
 		boolean isPassed = AccountSetting.isNotExceedSingleTransactionLimit(amount)
 				&& new CanWithdrawLogic().execute(account, amount)
-				&& new ExistsAccountNumberLogic().execute(transferAccountNumber)
-				&& new CanDepositLogic().execute(transferAccountNumber, amount);
+				&& new CanDepositLogic().execute(transferAccount, amount);
 
 		if (!isPassed) {
 			ErrorMessage errorMessage = new ErrorMessage();
@@ -70,7 +85,7 @@ public class Transfer extends HttpServlet {
 		}
 
 		// 振込処理
-		new TransferLogic().execute(account, transferAccountNumber, amount);
+		new TransferLogic().execute(account, transferAccount, amount);
 
 		response.sendRedirect("/bank/Main");
 	}

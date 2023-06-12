@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.LogDAO;
+import database.SetBalanceLogic;
 import logic.IsLoginLogic;
-import logic.SetBalanceLogic;
 import model.Account;
 import model.Log;
 

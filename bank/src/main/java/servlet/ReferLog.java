@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import database.GetRegisterDateLogic;
 import database.LogDAO;
-import logic.GetRegisterDateLogic;
 import logic.IsLoginLogic;
 import model.Account;
 import model.DateSetting;

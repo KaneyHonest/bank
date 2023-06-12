@@ -1,11 +1,9 @@
-package logic;
+package database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import database.DBManager;
 
 public class ExistsAccountNumberLogic {
 

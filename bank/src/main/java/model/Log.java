@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class Log implements Serializable {
 	private String operationTime;
 	private String operation;
-	private String addressee;
-	private String amount;
+	private String address;
+	private int amount;
 	private int Balance;
 
 	public String getOperationTime() {
@@ -25,19 +25,19 @@ public class Log implements Serializable {
 		this.operation = operation;
 	}
 
-	public String getAddressee() {
-		return addressee;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setAddressee(String addressee) {
-		this.addressee = addressee;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public String getAmount() {
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 

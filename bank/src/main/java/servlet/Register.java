@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import database.ExistsAccountNumberLogic;
+import database.RegisterUserLogic;
 import logic.CheckUserInformationLogic;
 import logic.CreateAccountNumberLogic;
-import logic.ExistsAccountNumberLogic;
 import logic.IsLoginLogic;
-import logic.RegisterUserLogic;
 import model.Account;
 import model.ErrorMessage;
 import model.User;
