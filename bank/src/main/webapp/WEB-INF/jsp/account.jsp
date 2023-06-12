@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><%@page
-	import="model.Account, model.Log, java.util.List, java.util.Date, java.text.SimpleDateFormat"%>
+	import="model.Account, model.Log, model.AccountSetting, java.util.List, java.util.Date, java.text.SimpleDateFormat"%>
 <%
 response.setHeader("Cache-Control", "no-store");
 %>
@@ -114,7 +114,7 @@ a {
 		<h1>口座画面</h1>
 <div class="menubar">
 		<%
-		if (account.getBalance() == 1000000000) {
+		if (account.getBalance() == AccountSetting.MAXIMUM_AMOUNT) {
 		%>
 		<p class="menu">入金</p>
 		<%
@@ -158,25 +158,23 @@ a {
 					<th>金額</th>
 					<th>残高</th>
 				</tr>
-				<tr>
+				
 					<%
 					for (Log log : logs) {
 					%>
+					<tr>
 					<td><%=log.getOperationTime()%></td>
 					<td><%=log.getOperation()%></td>
 					<td><%=log.getAddress()%></td>
 					<td><%=log.getAmount()%></td>
 					<td><%=log.getBalance()%></td>
 				</tr>
-				<tr>
 					<%
 					}
 					%>
-				</tr>
 			</table>
 		</div>
 	</div>
-<script src="js/index.js"></script>
 
 </body>
 </html>

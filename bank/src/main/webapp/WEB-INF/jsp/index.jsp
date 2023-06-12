@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>データベースバンク</title>
 <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
 <style type="text/css">
 
 h1 {

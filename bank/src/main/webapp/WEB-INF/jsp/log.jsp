@@ -18,6 +18,7 @@ List<Log> logs = (List<Log>) request.getAttribute("logs");
 <meta charset="UTF-8">
 <title>口座履歴</title>
 <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
 <style type="text/css">
 div {
 	width: 150px;
@@ -88,7 +89,9 @@ select {
 		<caption>履歴一覧</caption>
 		<thead>
 			<tr>
-				<%if (logs.size() != 0) { %>
+				<%
+				if (logs.size() != 0) {
+				%>
 				<th><select class="order">
 						<option value="ascending" selected>昇順</option>
 						<option value="descending">降順</option>
@@ -99,10 +102,14 @@ select {
 						<option value="出金">出金</option>
 						<option value="振込">振込</option>
 				</select></th>
-				<%} else { %>
+				<%
+				} else {
+				%>
 				<th>日付</th>
 				<th>操作</th>
-				<%} %>
+				<%
+				}
+				%>
 				<th>宛名</th>
 				<th>金額</th>
 				<th>残高</th>
@@ -117,8 +124,7 @@ select {
 				<td><%=log.getOperationTime()%></td>
 				<td><%=log.getOperation()%></td>
 				<td><%=log.getAddress()%></td>
-				<td
-					class=" <%=log.getAmount() > 0 ? "font_green" : "font_red"%> ">
+				<td class=" <%=log.getAmount() > 0 ? "font_green" : "font_red"%> ">
 					<%=log.getAmount()%>
 				</td>
 				<td><%=log.getBalance()%></td>
@@ -128,7 +134,8 @@ select {
 		</tbody>
 	</table>
 	<script type="text/javascript">
-const input = document.querySelector("input[type='month' ]");
+	
+const input = document.querySelector("input[type='month']");
 const form = document.querySelector("form");
 const table = document.querySelector("table");
 const order = document.querySelector(".order");
@@ -156,6 +163,8 @@ input.addEventListener('change', () => {
 		form.submit(); 
 	} 
 }); 
+
 </script>
+	<script src="js/index.js"></script>
 </body>
 </html>

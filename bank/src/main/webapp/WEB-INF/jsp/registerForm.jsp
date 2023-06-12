@@ -10,6 +10,7 @@ ErrorMessage errorMessage = (ErrorMessage) request.getAttribute("errorMessage");
 <meta charset="UTF-8">
 <title>登録フォーム</title>
 <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
 <style type="text/css">
 div {
 	margin: 100px auto;
@@ -116,6 +117,10 @@ a:active {
 	</div>
 
 	<script type="text/javascript">
+	window.addEventListener("pageshow", () => {
+		const form = document.querySelector("form");
+		form.reset();
+	});
 	const nameInput = document.querySelector("#name");
 	const passwordInput = document.querySelector("#password");
 
@@ -151,10 +156,8 @@ a:active {
 		} 
 	});
 	
-	window.addEventListener("pageshow", () => {
-		const form = document.querySelector("form");
-		form.reset();
-	});
+	
 	</script>
+	<script src="js/index.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%><%@page import="model.Account, model.ErrorMessage"%>
+    pageEncoding="UTF-8"%><%@page import="model.Account, model.ErrorMessage, model.AccountSetting"%>
     <%response.setHeader("Cache-Control","no-store"); %>
 <%
 Account account = (Account) session.getAttribute("account");
@@ -13,6 +13,7 @@ ErrorMessage errorMessage = (ErrorMessage) request.getAttribute("errorMessage");
 <meta charset="UTF-8">
 <title>振込画面</title>
 <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
 <style type="text/css">
 div {
 	margin: 100px auto;
@@ -100,7 +101,7 @@ a:active {
 <h1>振込画面</h1>
 <form action="/bank/Transfer" method="post">
 <label for="accountNumber">口座番号</label> <input type="text" name="accountNumber" id="accountNumber" pattern="^1\d{9}$" placeholder="金額" title="口座番号を入力" required ><br>
-<label for="amount">金額(残高:<%= account.getBalance() %>)</label><input type="number" name="amount" id="amount" min="1" max="<%= account.getBalance() > 10000000 ? 10000000 : 10000000 - account.getBalance() %>" placeholder="金額" title="金額を入力" required list="defaultNumbers">
+<label for="amount">金額(残高:<%= account.getBalance() %>)</label><input type="number" name="amount" id="amount" min="1" max="<%= account.getBalance() > AccountSetting.SINGLE_TRANSACTION_LIMIT ? AccountSetting.SINGLE_TRANSACTION_LIMIT : account.getBalance() %>" placeholder="金額" title="金額を入力" required list="defaultNumbers">
 <datalist id="defaultNumbers">
   <option value="1000"></option>
   <option value="10000"></option>
@@ -119,6 +120,10 @@ a:active {
 <a href="/bank/Main">戻る</a>
 </div>
 <script type="text/javascript">
+window.addEventListener("pageshow", () => {
+	const form = document.querySelector("form");
+	form.reset();
+});
 const accountNumberInput = document.querySelector("input[type='text']");
 const amountInput = document.querySelector("input[type='number']");
 const max = amountInput.max;
@@ -160,10 +165,8 @@ amountInput.addEventListener('input', () => {
 	  }
 });
 
-window.addEventListener("pageshow", () => {
-	const form = document.querySelector("form");
-	form.reset();
-});
+
 </script>
+<script src="js/index.js"></script>
 </body>
 </html>
