@@ -6,7 +6,7 @@ public class Log implements Serializable {
 	private String operationTime;
 	private String operation;
 	private String address;
-	private int amount;
+	private String amount;
 	private int Balance;
 
 	public String getOperationTime() {
@@ -33,11 +33,11 @@ public class Log implements Serializable {
 		this.address = address;
 	}
 
-	public int getAmount() {
+	public String getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 

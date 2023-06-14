@@ -33,7 +33,7 @@ public class LogDAO {
 				log.setOperationTime(new SimpleDateFormat("yyyy年M月d日").format(rs.getTimestamp(1)));
 				log.setOperation(rs.getString(2));
 				log.setAddress(rs.getString(3));
-				log.setAmount(rs.getInt(4));
+				log.setAmount(rs.getString(4));
 				log.setBalance(rs.getInt(5));
 				logs.add(log);
 			}
@@ -65,7 +65,7 @@ public class LogDAO {
 				log.setOperationTime(new SimpleDateFormat("yyyy年M月d日").format(rs.getTimestamp(1)));
 				log.setOperation(rs.getString(2));
 				log.setAddress(rs.getString(3));
-				log.setAmount(rs.getInt(4));
+				log.setAmount(rs.getString(4));
 				log.setBalance(rs.getInt(5));
 				logs.add(log);
 			}

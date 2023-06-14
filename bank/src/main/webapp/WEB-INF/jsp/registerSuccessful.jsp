@@ -20,10 +20,8 @@ h1, h2, p {
 }
 
 a {
-  text-decoration: none;
   font-size : 30px;
     display: block;
-    text-align: center;
     margin: auto;
 }
 </style>

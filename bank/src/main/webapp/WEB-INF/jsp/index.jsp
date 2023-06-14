@@ -13,10 +13,8 @@
 h1 {
 	margin : 100px 0px;
 	font-size : 125px;
-	text-align: center;
 }
 a {
-  text-decoration: none;
   font-size : 30px;
    box-shadow: 0 5px #0023b7;
     border-radius: 5px;
@@ -25,9 +23,8 @@ a {
     padding: 25px;
     box-sizing: border-box;
     background: dodgerblue;
-    color: #FFF;
-    text-align: center;
     margin: 10px auto;
+    color: #FFF;
 }
 a:hover {
 	background: blue;

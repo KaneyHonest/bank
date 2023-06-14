@@ -26,19 +26,10 @@ String date = new SimpleDateFormat("yyyy-MM").format(new Date());
 
 <style type="text/css">
 
-table {
-  border-collapse: collapse;
-  margin-top: 15px;
-}
-th, td {
-	border: solid 1px black;
-	padding: 3px 10px;
-}
-th {
-	background: gainsboro;
+a {
+	color: black;
 }
 h1 {
-	text-align: center;
 	margin: 15px 0;
 }
 .flex {
@@ -70,10 +61,6 @@ h1 {
 .menubtn:hover {
 	background: darkgrey;
 }
-a {
-	text-decoration: none;
-	color: black;
-}
 
 .left {
 	flex-basis: 400px;
@@ -95,7 +82,6 @@ a {
 	display: block;
 	margin-left: auto;
 	width: 90px;
-	text-align:center;
 	border-radius: 3px;
 	border: 1px solid gray;
 	background: whitesmoke;
@@ -106,7 +92,9 @@ a {
 .btn:active {
 	background: white;
 }
-	
+table {
+	margin-top: 15px;
+}
 </style>
 </head>
 <body>
@@ -143,7 +131,7 @@ a {
 		<div class="left">
 			<h2>残高</h2>
 			<p class="amount">
-				<%=account.getBalance()%></p>
+				<%=String.format("%,d", account.getBalance())%></p>
 		</div>
 		<!-- 記録出力 -->
 		<div class="right">
@@ -166,7 +154,7 @@ a {
 					<td><%=log.getOperationTime()%></td>
 					<td><%=log.getOperation()%></td>
 					<td><%=log.getAddress()%></td>
-					<td><%=log.getAmount()%></td>
+					<td class=" <%=log.getAmount().charAt(0) == '+' ? "font_green" : "font_red"%> "><%=log.getAmount()%></td>
 					<td><%=log.getBalance()%></td>
 				</tr>
 					<%

@@ -25,12 +25,9 @@ div {
 	margin: 0 auto;
 }
 
-.font_green {
-	color: green;
-}
+
 
 h1 {
-	text-align: center;
 	margin: 15px 0;
 }
 
@@ -41,37 +38,20 @@ form {
 a {
 	left: 120px;
 	position: relative;
-	text-decoration: none;
 	font-size: 15px;
 	display: block;
-	text-align: center;
 	border-radius: 3px;
 	width: 50px;
 	height: 25px;
 	background: whitesmoke;
-	color: black;
 	border: 1px solid gray;
 }
 
 table {
-	border-collapse: collapse;
 	margin: 0 auto;
 }
 
-th, td {
-	text-align: center;
-	border: solid 1px black;
-	padding: 3px 10px;
-}
 
-th {
-	background: gainsboro;
-}
-
-select {
-	appearance: auto;
-	text-align: center;
-}
 </style>
 </head>
 <body>
@@ -124,7 +104,7 @@ select {
 				<td><%=log.getOperationTime()%></td>
 				<td><%=log.getOperation()%></td>
 				<td><%=log.getAddress()%></td>
-				<td class=" <%=log.getAmount() > 0 ? "font_green" : "font_red"%> ">
+				<td class=" <%=log.getAmount().charAt(0) == '+' ? "font_green" : "font_red"%> ">
 					<%=log.getAmount()%>
 				</td>
 				<td><%=log.getBalance()%></td>

@@ -10,7 +10,7 @@ public class WithdrawLogic {
 
 	public void execute(Account account, int amount) {
 
-		new LogLogic().execute(account, new Timestamp(System.currentTimeMillis()), "出金", -amount);
-		new UpdateBlanceLogic().execute(account, -amount);
+		new LogLogic().execute(account, new Timestamp(System.currentTimeMillis()), "出金", "-" + amount, account.getBalance() - amount);
+		new UpdateBlanceLogic().execute(account, account.getBalance() - amount);
 	}
 }

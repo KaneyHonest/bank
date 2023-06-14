@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import model.Account;
 
 public class LogLogic {
-	public void execute(Account account, Timestamp currentTime,  String operation, int amount) {
+	public void execute(Account account, Timestamp currentTime,  String operation, String amount, int afterBalance) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -20,8 +20,8 @@ public class LogLogic {
 			ps.setString(1, account.getAccountNumber());
 			ps.setTimestamp(2, currentTime);
 			ps.setString(3, operation);
-			ps.setInt(4, amount);
-			ps.setInt(5, account.getBalance() + amount);
+			ps.setString(4, amount);
+			ps.setInt(5, afterBalance);
 			ps.executeUpdate();
 
 			
@@ -31,7 +31,7 @@ public class LogLogic {
 		}
 	}
 	
-	public void execute(Account account, Account addressAccount, Timestamp currentTime,  String operation, int amount) {
+	public void execute(Account account, Account addressAccount, Timestamp currentTime,  String operation, String amount, int afterBalance) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -44,8 +44,8 @@ public class LogLogic {
 			ps.setTimestamp(2, currentTime);
 			ps.setString(3, operation);
 			ps.setString(4, addressAccount.getAccountNumber());
-			ps.setInt(5, amount);
-			ps.setInt(6, account.getBalance() + amount);
+			ps.setString(5, amount);
+			ps.setInt(6, afterBalance);
 			ps.executeUpdate();
 
 		} catch (SQLException e) {

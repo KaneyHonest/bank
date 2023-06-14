@@ -7,13 +7,13 @@ import java.sql.SQLException;
 import model.Account;
 
 public class UpdateBlanceLogic {
-	public void execute(Account account, int amount) {
+	public void execute(Account account, int balance) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = DBManager.getConnection();
-			ps = con.prepareStatement("update user set balance=balance+? where accountNumber = ?;");
-			ps.setInt(1, amount);
+			ps = con.prepareStatement("update user set balance=? where accountNumber = ?;");
+			ps.setInt(1, balance);
 			ps.setString(2, account.getAccountNumber());
 			ps.executeUpdate();
 

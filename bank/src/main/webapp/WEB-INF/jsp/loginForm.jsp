@@ -14,99 +14,15 @@ ErrorMessage errorMessage = (ErrorMessage) request.getAttribute("errorMessage");
 <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
 <style type="text/css">
-div {
-	margin: 100px auto;
-	padding-top: 10px;
-	height: 425px;
-	width: 400px;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-
-h1 {
-	margin: 50px 0px 30px 0px;
-	font-size: 40px;
-	text-align: center;
-}
 
 form {
 	text-align: center;
 }
-
-label {
-	font-size: 20px;
-}
-
-#accountNumber, #password {
-	display: block;
-	margin: auto;
-	border: 2px solid gray; /* 枠線 */
-	border-radius: 5px; /* 角丸 */
-	padding: 0.5em; /* 内側の余白量 */
-	width: 20em;
-	background-color: white; /* 横幅 */
-	height: 30px; /* 高さ */
-	font-size: 1em; /* 文字サイズ */
-	line-height: 1.2; /* 行の高さ */
-}
-
-#accountNumber:focus, #password:focus {
-	border: 3px solid black;
-}
-
-input[type="submit"] {
-	display: block;
-	margin-left: auto;
-	margin-right: 50px;
-	margin-top: 60px;
-	font-size: 15px;
-	text-align: center;
-	border-radius: 3px;
-	width: 50px;
-	background: whitesmoke;
-	color: black;
-	border: 1px solid gray;
-	height: 25px;
-	cursor: pointer;
-}
-
-a {
-	position: relative;
-	top: -25px;
-	text-decoration: none;
-	font-size: 15px;
-	display: block;
-	text-align: center;
-	margin-left: auto;
-	margin-right: 100px;
-	border-radius: 3px;
-	width: 50px;
-	height: 25px;
-	background: whitesmoke;
-	color: black;
-	border: 1px solid gray;
-}
-
-input[type="submit"]:hover {
-	background: green;
-}
-
-input[type="submit"]:active {
-	background: white;
-}
-
-a:hover {
-	background: red;
-}
-
-a:active {
-	background: white;
-}
 </style>
 </head>
 <body>
-	<div>
-		<h1>ログイン画面</h1>
+	<div class="form_area">
+		<h1 class="form_title">ログイン画面</h1>
 		<%
 		if (errorMessage != null) {
 		%>
@@ -117,9 +33,10 @@ a:active {
 		%>
 		<form action="/bank/Login" method="post">
 			<label for="accountNumber">口座番号</label> <input type="text"
-				name="accountNumber" id="accountNumber" required placeholder="口座番号"
-				title="口座番号10桁を入力"><br> <label for="password">パスワード</label>
-			<input type="password" name="password" id="password" required
+				name="accountNumber" id="accountNumber" class="input_area" required
+				placeholder="口座番号" title="口座番号10桁を入力"><br> <label
+				for="password">パスワード</label> <input type="password" name="password"
+				id="password" class="input_area" required
 				autocomplete="new-password" placeholder="パスワード"
 				title="半角英数字4-16文字を入力"> <input type="submit" value="登録"
 				id="button">
@@ -128,7 +45,7 @@ a:active {
 
 
 
-		<a href="/bank/Bank">戻る</a>
+		<a class="form_back_btn" href="/bank/Bank">戻る</a>
 
 	</div>
 	<script type="text/javascript">
@@ -136,19 +53,29 @@ a:active {
 		const form = document.querySelector("form");
 		form.reset();
 	});
+	const accountNumberInput = document.querySelector("input[type='text']");
+	const passwordInput = document.querySelector("input[type='password']");
+	
+	passwordInput.setCustomValidity('入力必須');
+	accountNumberInput.setCustomValidity('入力必須');
 
-const button = document.querySelector("input[type='sumbit']");
-const form = document.querySelector("form");
-
-button.disabled = true;
-
-form.addEventListener('input', () => {
-	button.disabled = !form.checkValidity();
-});
-
+	passwordInput.addEventListener('input', () => {
+		passwordInput.setCustomValidity('');
+		passwordInput.checkValidity();
+	});
+	
+	accountNumberInput.addEventListener('input', () => {
+		accountNumberInput.setCustomValidity('');
+		accountNumberInput.checkValidity();
+	});
+	accountNumberInput.addEventListener('invalid', () => {
+		passwordInput.setCustomValidity('入力必須');
+	});
+	passwordInput.addEventListener('invalid', () => {
+		accountNumberInput.setCustomValidity('入力必須');
+	});
 
 </script>
-	<script src="js/index.js"></script>
 </body>
 
 
