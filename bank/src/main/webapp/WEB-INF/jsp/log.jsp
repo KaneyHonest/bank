@@ -98,37 +98,37 @@ table {
 		</tbody>
 	</table>
 	<script type="text/javascript">
-const input = document.querySelector("input[type='month']");
-const form = document.querySelector("form");
-const table = document.querySelector("table");
-const order = document.querySelector("#order");
-const operation = document.querySelector("#operation");
+	const input = document.querySelector("input[type='month']");
+	const form = document.querySelector("form");
+	const table = document.querySelector("table");
+	const order = document.querySelector("#order");
+	const operation = document.querySelector("#operation");
 
-// ソート
-order?.addEventListener('change', () => {
-	const tBody = table.tBodies[0];
-    const rows = tBody.rows;
-    for (let i = rows.length - 1; i >= 0; i--) {
-		tBody.appendChild(rows[i]);
-    }
-});
+	// ソート
+	order?.addEventListener('change', () => {
+		const tBody = table.tBodies[0];
+	    const rows = tBody.rows;
+	    for (let i = rows.length - 1; i >= 0; i--) {
+			tBody.appendChild(rows[i]);
+	    }
+	});
 
-// フィルター
-operation?.addEventListener('change', () => {
-	for (let row of table.tBodies[0].rows) {
-		row.style.display = (operation.value === '' || row.cells[1].textContent === operation.value) ? 'table-row' : 'none';
-	}
-});
-
-input.addEventListener('click', ()=> { 
-	input.showPicker(); // カレンダーの表示 
-}) 
-
-input.addEventListener('change', () => {
-	if ( !input.validity.valueMissing) { 
-		form.submit(); // doGet()
-	} 
-}); 
+	// フィルター
+	operation?.addEventListener('change', () => {
+		for (let row of table.tBodies[0].rows) {
+			row.style.display = (operation.value === '' || row.cells[1].textContent === operation.value) ? 'table-row' : 'none';
+		}
+	});
+	
+	input.addEventListener('click', ()=> { 
+		input.showPicker(); // カレンダーの表示 
+	}) 
+	
+	input.addEventListener('change', () => {
+		if ( !input.validity.valueMissing) { 
+			form.submit(); // doGet()
+		} 
+	}); 
 </script>
 </body>
 </html>

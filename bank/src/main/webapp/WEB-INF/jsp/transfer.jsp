@@ -38,49 +38,52 @@ ErrorMessage errorMessage = (ErrorMessage) request.getAttribute("errorMessage");
 		const form = document.querySelector("form");
 		form.reset(); // ブラウザー自動入力対策
 	});
-const accountNumberInput = document.querySelector("input[type='text']");
-const amountInput = document.querySelector("input[type='number']");
-const max = amountInput.max;
-const regexp = /^0+/;
+	
+	const accountNumberInput = document.querySelector("input[type='text']");
+	const amountInput = document.querySelector("input[type='number']");
+	const max = amountInput.max;
+	const regexp = /^0+/;
 
-accountNumberInput.setCustomValidity('口座番号を入力してください。');
-amountInput.setCustomValidity('金額を入力してください。');
-
-accountNumberInput.addEventListener('input', () => {
-	accountNumberInput.setCustomValidity('');
-	accountNumberInput.checkValidity();
-});
-
-accountNumberInput.addEventListener('invalid', () => {
-	if (accountNumberInput.validity.valueMissing) {
-		accountNumberInput.setCustomValidity('口座番号を入力してください。');
-	} else if (accountNumberInput.validity.patternMismatch) {
-		accountNumberInput.setCustomValidity('口座番号は半角数字10桁を入力してください。');
-	} 
-});
-amountInput.addEventListener('input', () => {
-	amountInput.setCustomValidity('');
-	amountInput.checkValidity();
-});
-
-amountInput.addEventListener('invalid', () => {
-	  if (amountInput.validity.rangeOverflow || amountInput.validity.rangeUnderflow) {
-		  if (max == 1) {
-			  amountInput.setCustomValidity("金額は1円を入力してください。");
-		  } else if (max < 10000){
-			  amountInput.setCustomValidity("金額は1-" + max + "円の範囲で入力してください。");
-		  } else {
-			  amountInput.setCustomValidity("金額は1-" + Math.floor(max / 10000) + "万" + (max % 10000 != 0 ? max % 10000 : "") + "円の範囲で入力してください。");
-		  }
-	  } else if (amountInput.validity.stepMismatch) {
-		  amountInput.setCustomValidity('整数値を入力してください。');
-	  } else if (amountInput.validity.valueMissing) {
-		  amountInput.setCustomValidity('金額を入力してください。');
-	  } else if (regexp.test(amountInput.value)) {
-		  amountInput.setCustomValidity('先頭が０から始まる金額は不正です。');
-});
-
-
+	// 初期値
+	accountNumberInput.setCustomValidity('口座番号を入力してください。');
+	amountInput.setCustomValidity('金額を入力してください。');
+	
+	accountNumberInput.addEventListener('input', () => {
+		accountNumberInput.setCustomValidity('');
+		accountNumberInput.checkValidity();
+	});
+	
+	accountNumberInput.addEventListener('invalid', () => {
+		if (accountNumberInput.validity.valueMissing) {
+			accountNumberInput.setCustomValidity('口座番号を入力してください。');
+		} else if (accountNumberInput.validity.patternMismatch) {
+			accountNumberInput.setCustomValidity('口座番号は半角数字10桁を入力してください。');
+		} 
+	});
+	
+	amountInput.addEventListener('input', () => {
+		amountInput.setCustomValidity('');
+		amountInput.checkValidity();
+		if (regexp.test(amountInput.value)) {
+			amountInput.setCustomValidity('先頭が０から始まる金額は不正です。');
+		}
+	});
+	
+	amountInput.addEventListener('invalid', () => {
+		  if (amountInput.validity.rangeOverflow || amountInput.validity.rangeUnderflow) {
+			  if (max == 1) {
+				  amountInput.setCustomValidity("金額は1円を入力してください。");
+			  } else if (max < 10000){
+				  amountInput.setCustomValidity("金額は1-" + max + "円の範囲で入力してください。");
+			  } else {
+				  amountInput.setCustomValidity("金額は1-" + Math.floor(max / 10000) + "万" + (max % 10000 != 0 ? max % 10000 : "") + "円の範囲で入力してください。");
+			  }
+		  } else if (amountInput.validity.stepMismatch) {
+			  amountInput.setCustomValidity('整数値を入力してください。');
+		  } else if (amountInput.validity.valueMissing) {
+			  amountInput.setCustomValidity('金額を入力してください。');
+		  } 
+	});
 </script>
 </body>
 </html>

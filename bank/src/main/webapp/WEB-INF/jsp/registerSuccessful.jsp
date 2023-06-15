@@ -16,13 +16,15 @@ User user = (User) session.getAttribute("user");
 <style type="text/css">
 h1 {
 	font-size: 75px;
-	margin-top: 13%;
+	margin-top: 12%;
 }
+
 h2, p {
 	margin: 50px 0px;
 	font-size: 50px;
 	text-align: center;
 }
+
 a {
 	font-size: 30px;
 	display: block;

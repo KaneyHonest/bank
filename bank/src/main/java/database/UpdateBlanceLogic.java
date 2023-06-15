@@ -16,7 +16,6 @@ public class UpdateBlanceLogic {
 			ps.setInt(1, balance);
 			ps.setString(2, account.getAccountNumber());
 			ps.executeUpdate();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

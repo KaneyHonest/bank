@@ -17,7 +17,6 @@ public class RegisterUserLogic {
 			ps.setString(2, user.getPassword());
 			ps.setString(3, user.getAccountNumber());
 			ps.executeUpdate();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

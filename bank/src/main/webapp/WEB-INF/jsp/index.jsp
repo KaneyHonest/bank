@@ -16,6 +16,7 @@ h1 {
 	margin-top: 150px;
 	margin-bottom: 100px;
 }
+
 a {
 	font-size: 30px;
 	width: 300px;
@@ -28,9 +29,11 @@ a {
 	box-shadow: 0 5px #0023b7;
 	box-sizing: border-box;
 }
+
 a:hover {
 	background: blue;
 }
+
 a:active {
 	position: relative;
 	top: 5px;

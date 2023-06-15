@@ -22,9 +22,9 @@ ErrorMessage errorMessage = (ErrorMessage) request.getAttribute("errorMessage");
 		<%}%>
 		<form class="input_form" action="/bank/Login" method="post">
 			<label for="accountNumber">口座番号</label>
-			<input type="text" name="accountNumber" id="accountNumber" class="input_area" required placeholder="必須"> 
+			<input type="text" name="accountNumber" id="accountNumber" class="input_area" required placeholder="必須" title="口座番号を入力してください"> 
 			<label for="password">パスワード</label> 
-			<input type="password" name="password" id="password" class="input_area" required autocomplete="new-password" placeholder="必須"> 
+			<input type="password" name="password" id="password" class="input_area" required autocomplete="new-password" placeholder="必須" title="パスワードを入力してください"> 
 			<input type="submit" value="登録" id="button">
 		</form>
 		<a class="form_back_btn" href="/bank/Bank">戻る</a>

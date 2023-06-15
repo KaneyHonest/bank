@@ -14,84 +14,83 @@ List<Log> logs = (List<Log>) request.getAttribute("logs");
 <%
 String date = new SimpleDateFormat("yyyy-MM").format(new Date());
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>口座画面</title>
-
 <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
-
 <style type="text/css">
-a {
-	color: black;
-}
-
 h1 {
 	margin: 15px 0;
 }
 
-.flex {
-	margin-top: 30px;
-	display: flex;
-	justify-content: center;
-	column-gap: 30px;
-	row-gap: 30px;
-	flex-wrap: wrap;
+/* メニュー */
+a {
+	color: black;
 }
 
 .menubar {
-	display: flex;
 	height: 8%;
 	width: 100%;
 	border: 1px solid gray;
-	align-items: center;
 	background: lightgrey;
+	display: flex;
+	align-items: center;
 	justify-content: center;
 }
 
 .menu {
-	display: block;
 	font-size: 22px;
 	padding: 15px 20px;
+	display: block;
 }
 
 .menubtn:hover {
 	background: darkgrey;
 }
 
+.logout:hover {
+	color: red;
+}
+
+/* メイン */
+.flex {
+	margin-top: 30px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	column-gap: 30px;
+	row-gap: 30px;
+}
+
 .left {
-	flex-basis: 400px;
-	box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.14);
 	padding: 20px;
+	box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.14);
+	flex-basis: 400px;
 }
 
 .amount {
-	text-align: center;
 	font-size: 100px;
+	text-align: center;
 }
 
 .title {
-	position: absolute;
 	margin-left: 5px;
+	position: absolute;
 }
 
 .btn {
+	width: 90px;
+	background: whitesmoke;
 	margin-right: 5px;
+	margin-left: auto;
+	border: 1px solid gray;
+	border-radius: 3px;
+	display: block;
 	position: relative;
 	top: 8px;
-	display: block;
-	margin-left: auto;
-	width: 90px;
-	border-radius: 3px;
-	border: 1px solid gray;
-	background: whitesmoke;
-}
-
-.logout:hover {
-	color: red;
 }
 
 .btn:active {
@@ -104,7 +103,6 @@ table {
 </style>
 </head>
 <body>
-
 	<h1>口座画面</h1>
 	<div class="menubar">
 		<%if (account.getBalance() == AccountSetting.MAXIMUM_AMOUNT) {%>
@@ -137,7 +135,6 @@ table {
 					<th>金額</th>
 					<th>残高</th>
 				</tr>
-
 				<%for (Log log : logs) {%>
 				<tr>
 					<td><%=log.getOperationTime()%></td>
@@ -150,6 +147,5 @@ table {
 			</table>
 		</div>
 	</div>
-
 </body>
 </html>

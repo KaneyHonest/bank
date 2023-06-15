@@ -35,37 +35,36 @@ ErrorMessage errorMessage = (ErrorMessage) request.getAttribute("errorMessage");
 		form.reset(); // ブラウザー自動入力対策
 	});
 	
-const input = document.querySelector("input");
-const max = input.max;
-const regexp = /^0+/;
-
-// 初期値
-input.setCustomValidity('金額を入力してください。');
-
-input.addEventListener('input', () => {
-	input.setCustomValidity('');
-	input.checkValidity();
-});
-
-input.addEventListener('invalid', () => {
-	  if (input.validity.rangeOverflow || input.validity.rangeUnderflow) {
-		  if (max == 1) {
-			  input.setCustomValidity("金額は1円を入力してください。");
-		  } else if (max < 10000){
-			  input.setCustomValidity("金額は1-" + max + "円の範囲で入力してください。");
-		  } else {
-			  input.setCustomValidity("金額は1-" + Math.floor(max / 10000) + "万" + (max % 10000 != 0 ? max % 10000 : "") + "円の範囲で入力してください。");
-		  }
-	  } else if (input.validity.stepMismatch) {
-		  input.setCustomValidity('整数値を入力してください。');
-	  } else if (input.validity.valueMissing) {
-		  input.setCustomValidity('金額を入力してください。');
-	  } else if (regexp.test(input.value)) {
-		  input.setCustomValidity('先頭が０から始まる金額は不正です。');
-	  } 
-});
-
-
+	const input = document.querySelector("input");
+	const max = input.max;
+	const regexp = /^0+/;
+	
+	// 初期値
+	input.setCustomValidity('金額を入力してください。');
+	
+	input.addEventListener('input', () => {
+		input.setCustomValidity('');
+		input.checkValidity();
+		if (regexp.test(input.value)) {
+			input.setCustomValidity('先頭が０から始まる金額は不正です。');
+		} 
+	});
+	
+	input.addEventListener('invalid', () => {
+		  if (input.validity.rangeOverflow || input.validity.rangeUnderflow) {
+			  if (max == 1) {
+				  input.setCustomValidity("金額は1円を入力してください。");
+			  } else if (max < 10000){
+				  input.setCustomValidity("金額は1-" + max + "円の範囲で入力してください。");
+			  } else {
+				  input.setCustomValidity("金額は1-" + Math.floor(max / 10000) + "万" + (max % 10000 != 0 ? max % 10000 : "") + "円の範囲で入力してください。");
+			  }
+		  } else if (input.validity.stepMismatch) {
+			  input.setCustomValidity('整数値を入力してください。');
+		  } else if (input.validity.valueMissing) {
+			  input.setCustomValidity('金額を入力してください。');
+		  } 
+	});
 </script>
 </body>
 </html>
