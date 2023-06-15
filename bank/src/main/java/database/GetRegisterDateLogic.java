@@ -11,7 +11,6 @@ import model.Account;
 public class GetRegisterDateLogic {
 
 	public String execute(Account account) {
-
 		Connection con = null;
 		ResultSet rs = null;
 		PreparedStatement ps = null;

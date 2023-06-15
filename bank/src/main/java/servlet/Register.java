@@ -27,19 +27,19 @@ public class Register extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-
-		User user = (User) session.getAttribute("user");
-		if (user != null) {
-			// ユーザーのセッションがあれば登録フォームではなく、口座番号の確認画面へリダイレクト
-			response.sendRedirect("/bank/RegisterSuccessful");
-			return;
-		}
-
+		
 		Account account = (Account) session.getAttribute("account");
 		boolean isLogin = new IsLoginLogic().execute(account);
 		if (isLogin) {
 			// ログイン状態なら口座画面へリダイレクト
 			response.sendRedirect("/bank/Main");
+			return;
+		}
+
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			// ユーザーのセッションがあれば登録フォームではなく、口座番号の確認画面へリダイレクト
+			response.sendRedirect("/bank/RegisterSuccessful");
 			return;
 		}
 

@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%><%@page import="model.Account, model.ErrorMessage, model.AccountSetting"%>
-    <%response.setHeader("Cache-Control","no-store"); %>
+	pageEncoding="UTF-8"%><%@page
+	import="model.Account, model.ErrorMessage, model.AccountSetting"%>
+<%
+response.setHeader("Cache-Control", "no-store");
+%>
 <%
 Account account = (Account) session.getAttribute("account");
 %>
@@ -14,40 +17,25 @@ ErrorMessage errorMessage = (ErrorMessage) request.getAttribute("errorMessage");
 <title>入金画面</title>
 <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
-<style type="text/css">
-form {
-	text-align: center;
-}
-
-</style>
 </head>
 <body>
-<div class="form_area">
-<h1>入金画面</h1>
-<form action="/bank/Deposit" method="post">
-<label for="amount">金額</label><input type="number" name="amount" id="amount" class="input_area" min="1" max="<%= account.getBalance() + AccountSetting.SINGLE_TRANSACTION_LIMIT > AccountSetting.MAXIMUM_AMOUNT ? AccountSetting.MAXIMUM_AMOUNT - account.getBalance() : AccountSetting.SINGLE_TRANSACTION_LIMIT %>" placeholder="金額" title="金額を入力" required list="defaultNumbers">
-<datalist id="defaultNumbers">
-  <option value="1000"></option>
-  <option value="10000"></option>
-</datalist>
-<input type="submit" value="入金">
-</form>
-
-<%
-	if (errorMessage != null) {
-	%>
-	<p>
-		<%=errorMessage.getMessage()%></p>
-	<%
-	}
-	%>
-<a class="form_back_btn" href="/bank/Main">戻る</a>
-</div>
-<script type="text/javascript">
-window.addEventListener("pageshow", () => {
-	const form = document.querySelector("form");
-	form.reset();
-});
+	<div class="form_area">
+		<h1 class="form_title">入金画面</h1>
+		<%if (errorMessage != null) {%>
+		<p class="error_area"><%=errorMessage.getMessage()%></p>
+		<%}%>
+		<form class="input_form" action="/bank/Deposit" method="post">
+			<label for="amount">金額</label>
+			<input type="number" name="amount" id="amount" class="input_area" min="1" max="<%=account.getBalance() + AccountSetting.SINGLE_TRANSACTION_LIMIT > AccountSetting.MAXIMUM_AMOUNT ? AccountSetting.MAXIMUM_AMOUNT - account.getBalance() : AccountSetting.SINGLE_TRANSACTION_LIMIT%>" placeholder="金額" title="金額を入力" required>
+			<input type="submit" value="入金">
+		</form>
+		<a class="form_back_btn" href="/bank/Main">戻る</a>
+	</div>
+	<script type="text/javascript">
+	window.addEventListener("pageshow", () => {
+		const form = document.querySelector("form");
+		form.reset(); // ブラウザー自動入力対策
+	});
 
 const input = document.querySelector("input[type='number']");
 const max = input.max;
@@ -66,7 +54,7 @@ input.addEventListener('invalid', () => {
 		  } else if (max < 10000){
 			  input.setCustomValidity("金額は1-" + max + "円の範囲で入力してください。");
 		  } else {
-			  input.setCustomValidity("金額は1-" + (max / 10000) + "万円の範囲で入力してください。");
+			  input.setCustomValidity("金額は1-" + Math.floor(max / 10000) + "万" + (max % 10000 != 0 ? max % 10000 : "") + "円の範囲で入力してください。");
 		  }
 	  } else if (input.validity.stepMismatch) {
 		  input.setCustomValidity('整数値を入力してください。');
@@ -80,6 +68,5 @@ input.addEventListener('invalid', () => {
 
 
 </script>
-<script src="js/index.js"></script>
 </body>
 </html>

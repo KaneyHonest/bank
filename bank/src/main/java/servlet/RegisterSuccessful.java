@@ -22,19 +22,19 @@ public class RegisterSuccessful extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-
-		User user = (User) session.getAttribute("user");
-		if (user == null) {
-			// ユーザー情報がなければ最初の画面へリダイレクト
-			response.sendRedirect("/bank/Bank");
-			return;
-		}
-
+		
 		Account account = (Account) session.getAttribute("account");
 		boolean isLogin = new IsLoginLogic().execute(account);
 		if (isLogin) {
 			// ログイン状態なら口座画面へリダイレクト
 			response.sendRedirect("/bank/Main");
+			return;
+		}
+
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			// ユーザー情報がなければ最初の画面へリダイレクト
+			response.sendRedirect("/bank/Bank");
 			return;
 		}
 

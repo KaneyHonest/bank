@@ -8,9 +8,7 @@ import java.sql.SQLException;
 import model.Account;
 
 public class SetBalanceLogic {
-
 	public void execute(Account account) {
-
 		Connection con = null;
 		ResultSet rs = null;
 		PreparedStatement ps = null;

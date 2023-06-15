@@ -8,15 +8,13 @@ import java.sql.SQLException;
 import model.User;
 
 public class CanLoginLogic {
-
 	public boolean execute(User user) {
 		Connection con = null;
 		ResultSet rs = null;
 		PreparedStatement ps = null;
 		try {
 			con = DBManager.getConnection();
-			ps = con.prepareStatement(
-					"select exists (select accountNumber from user where accountNumber = ? and password = ?);");
+			ps = con.prepareStatement("select exists (select accountNumber from user where accountNumber = ? and password = ?);");
 			ps.setString(1, user.getAccountNumber());
 			ps.setString(2, user.getPassword());
 			rs = ps.executeQuery();

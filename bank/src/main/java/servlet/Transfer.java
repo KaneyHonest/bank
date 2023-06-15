@@ -50,12 +50,9 @@ public class Transfer extends HttpServlet {
 		new SetBalanceLogic().execute(account);
 
 		request.setCharacterEncoding("UTF-8");
-		int amount = Integer.parseInt(request.getParameter("amount"));
-
 		String transferAccountNumber = request.getParameter("accountNumber");
 		boolean existsAccount = new ExistsAccountNumberLogic().execute(transferAccountNumber);
-		
-		if (!existsAccount) {
+		if (!existsAccount) { // 振込先の口座がなければ
 			ErrorMessage errorMessage = new ErrorMessage();
 			errorMessage.setMessage("振込に失敗しました");
 
@@ -65,11 +62,15 @@ public class Transfer extends HttpServlet {
 			return;
 		}
 		
+		// 振込先
 		Account transferAccount = new Account();
 		transferAccount.setAccountNumber(transferAccountNumber);
 		new SetBalanceLogic().execute(transferAccount);
 
-		// 振込額と振込先のチェック
+		
+		int amount = Integer.parseInt(request.getParameter("amount"));
+		
+		// 振込額のチェック
 		boolean isPassed = AccountSetting.isNotExceedSingleTransactionLimit(amount)
 				&& new CanWithdrawLogic().execute(account, amount)
 				&& new CanDepositLogic().execute(transferAccount, amount);

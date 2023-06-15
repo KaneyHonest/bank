@@ -12,9 +12,8 @@ import model.Account;
 import model.Log;
 
 public class LogDAO {
-
+	// 個数指定
 	public List<Log> execute(Account account, int logNumber) {
-
 		Connection con = null;
 		ResultSet rs = null;
 		PreparedStatement ps = null;
@@ -24,7 +23,6 @@ public class LogDAO {
 					"select log.operationTime, log.operation, log.address, log.amount, log.afterBalance from log join user using(id) where user.accountNumber = ? order by log.operationTime desc limit ?;");
 			ps.setString(1, account.getAccountNumber());
 			ps.setInt(2, logNumber);
-
 			rs = ps.executeQuery();
 
 			List<Log> logs = new ArrayList<>();
@@ -46,8 +44,8 @@ public class LogDAO {
 		return null;
 	}
 
+	// 日付指定
 	public List<Log> execute(Account account, String date) {
-
 		Connection con = null;
 		ResultSet rs = null;
 		PreparedStatement ps = null;

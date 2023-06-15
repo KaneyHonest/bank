@@ -10,11 +10,9 @@ public class DBManager {
 	private static String user = "root";
 	private static String pass = "1234";
 
-	// ユーティリティクラス
 	private DBManager() {}
 
 	public static Connection getConnection() {
-
 		Connection connection = null;
 		try {
 			Class.forName(driverName);
